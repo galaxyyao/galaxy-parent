@@ -6,6 +6,11 @@ import org.springframework.security.core.Authentication;
 
 import com.galaxy.authentication.exception.AuthenticationException;
 
+/**
+ * @author: 姚皓
+ * @date: 2019/7/16 11:38
+ * @description:
+ */
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
 	private final Boolean isAuthenticatePassword;

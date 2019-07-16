@@ -11,6 +11,11 @@ import org.hibernate.id.Configurable;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.type.Type;
 
+/**
+ * @author: 姚皓
+ * @date: 2019/7/16 11:38
+ * @description:
+ */
 public class SnowFlakeGenerator extends AbstractUUIDGenerator implements Configurable {
 	private IdWorker idWorker;
 

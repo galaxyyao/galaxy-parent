@@ -6,8 +6,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.galaxy.authentication.domain.PrivilegeRepository;
-import com.galaxy.authentication.domain.RolePrivilegeRelationRepository;
+import com.galaxy.authentication.domain.repository.PrivilegeRepository;
+import com.galaxy.authentication.domain.repository.RolePrivilegeRelationRepository;
 import com.galaxy.common.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -21,6 +21,11 @@ import com.galaxy.common.util.ReflectionUtil.ENTITY_SAVE_METHOD_ENUM;
 import com.galaxy.dict.service.SysDictService;
 import com.google.common.base.Strings;
 
+/**
+ * @author: 姚皓
+ * @date: 2019/7/16 11:38
+ * @description:
+ */
 @Service
 public class PrivilegeServiceImpl implements PrivilegeService {
     @Autowired

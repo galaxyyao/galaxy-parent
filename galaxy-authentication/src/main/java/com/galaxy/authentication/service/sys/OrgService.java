@@ -6,6 +6,11 @@ import com.galaxy.authentication.domain.entity.Org;
 import com.galaxy.authentication.domain.entity.User;
 import com.galaxy.common.exception.BusinessException;
 
+/**
+ * @author: 姚皓
+ * @date: 2019/7/16 11:38
+ * @description:
+ */
 public interface OrgService {
 	Org getOrg(String orgFullCode) throws BusinessException;
 

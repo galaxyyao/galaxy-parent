@@ -2,7 +2,7 @@ package com.galaxy.authentication.controller;
 
 import java.util.List;
 
-import com.galaxy.authentication.domain.UserRoleRelationRepository;
+import com.galaxy.authentication.domain.repository.UserRoleRelationRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.galaxy.authentication.domain.RolePrivilegeRelationRepository;
-import com.galaxy.authentication.domain.RoleRepository;
+import com.galaxy.authentication.domain.repository.RolePrivilegeRelationRepository;
+import com.galaxy.authentication.domain.repository.RoleRepository;
 import com.galaxy.authentication.domain.custom.sys.BindUserRoleRequest;
 import com.galaxy.authentication.domain.custom.sys.RolesRequest;
 import com.galaxy.authentication.domain.entity.Role;
@@ -33,6 +33,11 @@ import com.galaxy.common.rest.domain.JsonResult;
 import com.galaxy.common.util.ReflectionUtil;
 import com.galaxy.common.util.ReflectionUtil.ENTITY_SAVE_METHOD_ENUM;
 
+/**
+ * @author: 姚皓
+ * @date: 2019/7/16 11:38
+ * @description:
+ */
 @RestController
 @RequestMapping("/role")
 public class RoleController {

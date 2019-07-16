@@ -9,8 +9,10 @@ import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
+ * @author: 何民明
+ * @date: 2019/7/16 11:38
+ * @description:
  * 根据相应权限判断加了该注释的字段是否需要掩码
- *  by heminming
  */
 @Target(FIELD)
 @Retention(RUNTIME)

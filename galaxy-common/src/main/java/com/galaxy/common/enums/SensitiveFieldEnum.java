@@ -1,8 +1,10 @@
 package com.galaxy.common.enums;
 
 /**
+ * @author: 何民明
+ * @date: 2019/7/16 11:38
+ * @description:
  * 需要特殊处理的敏感字段
- * by heminming
  */
 public enum SensitiveFieldEnum {
     /**

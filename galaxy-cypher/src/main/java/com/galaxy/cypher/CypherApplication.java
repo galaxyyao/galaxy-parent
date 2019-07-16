@@ -14,6 +14,11 @@ import org.springframework.core.env.Environment;
 import com.galaxy.common.profile.DefaultProfileUtil;
 import com.google.common.base.Strings;
 
+/**
+ * @author: 姚皓
+ * @date: 2019/7/16 11:38
+ * @description:
+ */
 @SpringBootApplication
 @ComponentScan({"com.galaxy"})
 public class CypherApplication implements CommandLineRunner {

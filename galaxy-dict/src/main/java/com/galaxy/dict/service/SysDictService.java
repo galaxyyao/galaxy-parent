@@ -5,6 +5,11 @@ import java.util.List;
 import com.galaxy.common.exception.BusinessException;
 import com.galaxy.dict.domain.entity.SysDict;
 
+/**
+ * @author: 姚皓
+ * @date: 2019/7/16 11:38
+ * @description:
+ */
 public interface SysDictService {
 	SysDict getSysDict(String sysDictFullCode);
 

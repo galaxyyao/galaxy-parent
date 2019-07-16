@@ -11,6 +11,11 @@ import javax.persistence.Table;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 
+/**
+ * @author: 姚皓
+ * @date: 2019/7/16 11:38
+ * @description:
+ */
 @Entity
 @DynamicUpdate
 @Table(name = "TUSERROLERELATION")

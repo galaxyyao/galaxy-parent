@@ -5,6 +5,11 @@ import java.util.List;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * @author: 姚皓
+ * @date: 2019/7/16 11:38
+ * @description:
+ */
 @Configuration
 @ConfigurationProperties(prefix = "auth", ignoreUnknownFields = false)
 public class AuthProperties {

@@ -24,6 +24,11 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureException;
 
+/**
+ * @author: 姚皓
+ * @date: 2019/7/16 11:38
+ * @description:
+ */
 public class JwtAuthorizationTokenFilter extends OncePerRequestFilter {
 
 	private final Logger jwtLogger = LoggerFactory.getLogger(this.getClass());

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.galaxy.authentication.domain.RoleRepository;
-import com.galaxy.authentication.domain.UserRoleRelationRepository;
+import com.galaxy.authentication.domain.repository.RoleRepository;
+import com.galaxy.authentication.domain.repository.UserRoleRelationRepository;
 import com.galaxy.common.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -18,6 +18,11 @@ import com.galaxy.authentication.domain.entity.UserRoleRelation;
 import com.galaxy.common.util.ReflectionUtil;
 import com.galaxy.common.util.ReflectionUtil.ENTITY_SAVE_METHOD_ENUM;
 
+/**
+ * @author: 姚皓
+ * @date: 2019/7/16 11:38
+ * @description:
+ */
 @Service
 public class RoleServiceImpl implements RoleService{
 	@Autowired

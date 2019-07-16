@@ -1,7 +1,7 @@
 package com.galaxy.authentication.controller;
 
 import com.galaxy.authentication.config.AuthProperties;
-import com.galaxy.authentication.domain.UserRepository;
+import com.galaxy.authentication.domain.repository.UserRepository;
 import com.galaxy.authentication.domain.custom.JwtTokenRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -27,6 +27,11 @@ import com.galaxy.common.constant.CommonConstant;
 import com.galaxy.common.exception.BusinessException;
 import com.galaxy.common.rest.domain.JsonResult;
 
+/**
+ * @author: 姚皓
+ * @date: 2019/7/16 11:38
+ * @description:
+ */
 @RestController
 @RequestMapping("/user")
 public class UserController {

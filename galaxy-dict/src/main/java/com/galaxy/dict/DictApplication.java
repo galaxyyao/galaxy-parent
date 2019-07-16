@@ -17,6 +17,11 @@ import com.galaxy.common.profile.DefaultProfileUtil;
 import com.google.common.base.Strings;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+/**
+ * @author: 姚皓
+ * @date: 2019/7/16 11:38
+ * @description:
+ */
 @EntityScan(basePackageClasses = { DictApplication.class, Jsr310JpaConverters.class })
 @SpringBootApplication
 @ComponentScan({ "com.galaxy" })

@@ -10,6 +10,9 @@ import org.springframework.core.env.Environment;
 import com.galaxy.common.constant.ProfileConstant;
 
 /**
+ * @author: 姚皓
+ * @date: 2019/7/16 11:38
+ * @description:
  * Utility class to load a Spring profile to be used as default when there is no
  * <code>spring.profiles.active</code> set in the environment or as command line
  * argument. If the value is not available in <code>application.yml</code> then

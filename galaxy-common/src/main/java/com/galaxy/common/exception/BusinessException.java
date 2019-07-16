@@ -5,6 +5,11 @@ import java.util.Arrays;
 import com.galaxy.common.bean.MessagePropertyHolder;
 import com.google.common.base.Strings;
 
+/**
+ * @author: 姚皓
+ * @date: 2019/7/16 11:38
+ * @description:
+ */
 public class BusinessException extends Exception {
 
     private static final long serialVersionUID = 1L;

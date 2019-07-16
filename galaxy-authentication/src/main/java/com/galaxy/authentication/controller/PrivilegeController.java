@@ -2,6 +2,7 @@ package com.galaxy.authentication.controller;
 
 import java.util.List;
 
+import com.galaxy.authentication.constant.AuthConstant;
 import com.galaxy.authentication.domain.custom.sys.BindRolePrivilegeRequest;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.galaxy.authentication.domain.PrivilegeRepository;
-import com.galaxy.authentication.domain.RolePrivilegeRelationRepository;
+import com.galaxy.authentication.domain.repository.PrivilegeRepository;
+import com.galaxy.authentication.domain.repository.RolePrivilegeRelationRepository;
 import com.galaxy.authentication.domain.entity.Privilege;
 import com.galaxy.authentication.service.sys.PrivilegeService;
 import com.galaxy.authentication.service.sys.UserService;
@@ -25,6 +26,11 @@ import com.galaxy.common.util.ReflectionUtil;
 import com.galaxy.common.util.ReflectionUtil.ENTITY_SAVE_METHOD_ENUM;
 import com.google.common.base.Strings;
 
+/**
+ * @author: 姚皓
+ * @date: 2019/7/16 11:38
+ * @description:
+ */
 @RestController
 @RequestMapping("/privilege")
 public class PrivilegeController {
@@ -44,7 +50,7 @@ public class PrivilegeController {
     @PreAuthorize("hasAuthority('sys_privilege')")
     @Transactional(rollbackFor = Exception.class)
     public JsonResult<Void> addPrivilege(@RequestBody Privilege privilege) throws BusinessException {
-        if (privilege.getPrivilegeCode().contains("_")) {
+        if (privilege.getPrivilegeCode().contains(AuthConstant.HIERARCHY_SEPARATOR)) {
             throw new BusinessException("ATH2003").setPlaceHolder(privilege.getPrivilegeCode());
         }
 
@@ -65,7 +71,7 @@ public class PrivilegeController {
 
     @RequestMapping(value = "/userChildrenPrivilege/{privilegeFullCode}", method = RequestMethod.GET)
     public JsonResult<List<Privilege>> getUserChildrenPrivilege(@PathVariable String privilegeFullCode) throws BusinessException {
-        if ("root".equals(privilegeFullCode)) {
+        if (AuthConstant.PRIVILEGE_ROOT_CODE.equals(privilegeFullCode)) {
             privilegeFullCode = null;
         }
         List<Privilege> userChildrenPrivilege = privilegeService.getUserChildrenPrivilege(privilegeFullCode);

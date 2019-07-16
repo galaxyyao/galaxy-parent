@@ -4,6 +4,11 @@ import java.io.Serializable;
 
 import com.google.common.base.Strings;
 
+/**
+ * @author: 姚皓
+ * @date: 2019/7/16 11:38
+ * @description:
+ */
 public class JsonResult<T> implements Serializable {
 
 	private static final long serialVersionUID = -5711836684557771411L;

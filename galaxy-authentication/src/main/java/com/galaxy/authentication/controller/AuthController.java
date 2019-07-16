@@ -50,6 +50,11 @@ import com.galaxy.cypher.util.RsaCypherUtil;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 
+/**
+ * @author: 姚皓
+ * @date: 2019/7/16 11:38
+ * @description:
+ */
 @RestController
 public class AuthController {
 	private static final Logger logger = LoggerFactory.getLogger(AuthController.class);

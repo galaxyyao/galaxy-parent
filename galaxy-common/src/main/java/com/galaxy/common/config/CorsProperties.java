@@ -3,6 +3,11 @@ package com.galaxy.common.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * @author: 姚皓
+ * @date: 2019/7/16 11:38
+ * @description:
+ */
 @Configuration
 @ConfigurationProperties(prefix = "cors", ignoreUnknownFields = false)
 public class CorsProperties {

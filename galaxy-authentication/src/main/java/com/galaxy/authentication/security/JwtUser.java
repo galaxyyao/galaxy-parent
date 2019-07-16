@@ -1,12 +1,15 @@
 package com.galaxy.authentication.security;
 
-import java.util.Collection;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.Collection;
 
+/**
+ * @author: 姚皓
+ * @date: 2019/7/16 11:38
+ * @description:
+ */
 public class JwtUser implements UserDetails {
 
 	private static final long serialVersionUID = 4999668717876145692L;

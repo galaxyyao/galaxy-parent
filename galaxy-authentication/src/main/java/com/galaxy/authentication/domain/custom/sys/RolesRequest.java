@@ -2,6 +2,11 @@ package com.galaxy.authentication.domain.custom.sys;
 
 import com.galaxy.common.rest.domain.PageObject;
 
+/**
+ * @author: 姚皓
+ * @date: 2019/7/16 11:38
+ * @description:
+ */
 public class RolesRequest {
 	private String keyword;
 	private PageObject pageObject;

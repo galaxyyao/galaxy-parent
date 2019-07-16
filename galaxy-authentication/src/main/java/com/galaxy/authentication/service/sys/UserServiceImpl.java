@@ -3,7 +3,7 @@ package com.galaxy.authentication.service.sys;
 import com.galaxy.authentication.constant.AuthConstant;
 import com.galaxy.common.constant.RequestConstant;
 import com.galaxy.authentication.config.AuthProperties;
-import com.galaxy.authentication.domain.UserRepository;
+import com.galaxy.authentication.domain.repository.UserRepository;
 import com.galaxy.common.exception.BusinessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +25,11 @@ import com.galaxy.authentication.service.jwt.JwtTokenService;
 import com.galaxy.common.constant.CommonConstant;
 import com.galaxy.common.rest.domain.JsonResult;
 
+/**
+ * @author: 姚皓
+ * @date: 2019/7/16 11:38
+ * @description:
+ */
 @Service
 public class UserServiceImpl implements UserService {
     private static final Logger logger = LoggerFactory.getLogger(ApplicationStartupListener.class);

@@ -1,14 +1,18 @@
 package com.galaxy.common.util;
 
-import java.time.DayOfWeek;
+import com.google.common.base.Strings;
+
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
-import com.google.common.base.Strings;
-
+/**
+ * @author: 姚皓
+ * @date: 2019/7/16 11:38
+ * @description:
+ */
 public class DateUtil {
 	private final static String DATE_PATTERN = "yyyy-MM-dd";
 	private final static String DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";

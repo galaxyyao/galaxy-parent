@@ -1,4 +1,4 @@
-package com.galaxy.authentication.domain;
+package com.galaxy.authentication.domain.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,6 +9,11 @@ import com.galaxy.authentication.domain.entity.Role;
 
 import java.util.Optional;
 
+/**
+ * @author: 姚皓
+ * @date: 2019/7/16 11:38
+ * @description:
+ */
 @Repository
 public interface RoleRepository extends JpaRepository<Role, String> {
 	Optional<Role> findByRoleCode(String roleCode);

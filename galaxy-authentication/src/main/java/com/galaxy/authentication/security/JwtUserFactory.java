@@ -16,8 +16,13 @@ import org.springframework.stereotype.Component;
 import com.galaxy.authentication.domain.dao.PrivilegeDao;
 import com.galaxy.authentication.domain.entity.User;
 
+/**
+ * @author: 姚皓
+ * @date: 2019/7/16 11:38
+ * @description:
+ */
 @Component
-public final class JwtUserFactory {
+public class JwtUserFactory {
     @Autowired
     private PrivilegeDao privilegeDao;
 

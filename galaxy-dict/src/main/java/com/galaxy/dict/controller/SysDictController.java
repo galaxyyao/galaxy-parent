@@ -2,12 +2,12 @@ package com.galaxy.dict.controller;
 
 import java.util.List;
 
+import com.galaxy.dict.constant.SysDictConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +19,11 @@ import com.galaxy.common.rest.domain.JsonResult;
 import com.galaxy.dict.domain.entity.SysDict;
 import com.galaxy.dict.service.SysDictService;
 
+/**
+ * @author: 姚皓
+ * @date: 2019/7/16 11:38
+ * @description:
+ */
 @RestController
 @RequestMapping("/sysDict")
 public class SysDictController {
@@ -29,7 +34,7 @@ public class SysDictController {
 	@RequestMapping(value = "/sysDict", method = RequestMethod.PUT)
 	@Transactional(rollbackFor = Exception.class)
 	public JsonResult<Void> addSysDict(@RequestBody SysDict sysDict) throws BusinessException {
-		if (sysDict.getSysDictCode().contains("_")) {
+		if (sysDict.getSysDictCode().contains(SysDictConstant.HIERARCHY_SEPARATOR)) {
 			throw new BusinessException("DIC1001").setPlaceHolder(sysDict.getSysDictCode());
 		}
 		sysDictService.addSysDict(sysDict);

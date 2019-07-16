@@ -1,4 +1,4 @@
-package com.galaxy.authentication.domain;
+package com.galaxy.authentication.domain.repository;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +13,11 @@ import org.springframework.stereotype.Repository;
 
 import com.galaxy.authentication.domain.entity.User;
 
+/**
+ * @author: 姚皓
+ * @date: 2019/7/16 11:38
+ * @description:
+ */
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
 

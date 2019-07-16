@@ -10,8 +10,10 @@ import java.lang.reflect.Field;
 import java.util.Objects;
 
 /**
+ * @author: 何民明
+ * @date: 2019/7/16 11:38
+ * @description:
  * 处理需要使用掩码的敏感字段
- * by heminming
  */
 public class SensitiveFieldUtil {
 

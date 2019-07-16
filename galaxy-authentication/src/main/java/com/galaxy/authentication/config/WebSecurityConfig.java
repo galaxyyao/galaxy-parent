@@ -26,6 +26,11 @@ import com.galaxy.authentication.security.JwtAuthorizationTokenFilter;
 import com.galaxy.authentication.service.jwt.JwtTokenService;
 import com.galaxy.authentication.service.jwt.JwtUserDetailsServiceImpl;
 
+/**
+ * @author: 姚皓
+ * @date: 2019/7/16 11:38
+ * @description:
+ */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)

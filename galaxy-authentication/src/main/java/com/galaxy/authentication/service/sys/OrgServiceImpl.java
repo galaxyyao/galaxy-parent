@@ -3,8 +3,8 @@ package com.galaxy.authentication.service.sys;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.galaxy.authentication.domain.OrgRepository;
-import com.galaxy.authentication.domain.UserRepository;
+import com.galaxy.authentication.domain.repository.OrgRepository;
+import com.galaxy.authentication.domain.repository.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -16,6 +16,11 @@ import org.hibernate.annotations.GenericGenerator;
 
 import com.galaxy.common.annotation.Mapping;
 
+/**
+ * @author: 姚皓
+ * @date: 2019/7/16 11:38
+ * @description:
+ */
 @Entity
 @DynamicUpdate
 @Table(name = "TSYSDICT")

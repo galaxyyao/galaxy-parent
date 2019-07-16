@@ -7,6 +7,11 @@ import org.springframework.stereotype.Repository;
 
 import com.galaxy.dict.domain.entity.SysDict;
 
+/**
+ * @author: 姚皓
+ * @date: 2019/7/16 11:38
+ * @description:
+ */
 @Repository
 public interface SysDictRepository extends JpaRepository<SysDict, String> {
 	SysDict findOneBySysDictFullCode(String sysDictFullCode);

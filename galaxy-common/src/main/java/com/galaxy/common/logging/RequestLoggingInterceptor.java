@@ -1,5 +1,6 @@
 package com.galaxy.common.logging;
 
+import com.galaxy.common.constant.LoggingConstant;
 import com.galaxy.common.constant.RequestConstant;
 import com.galaxy.common.id.IdWorker;
 import com.google.common.base.Strings;
@@ -20,6 +21,11 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.function.Function;
 
+/**
+ * @author: 姚皓
+ * @date: 2019/7/16 11:38
+ * @description:
+ */
 @Component
 public class RequestLoggingInterceptor extends HandlerInterceptorAdapter {
     private static final Logger logger = LoggerFactory.getLogger("httpTraceLog");
@@ -83,7 +89,7 @@ public class RequestLoggingInterceptor extends HandlerInterceptorAdapter {
 
     public String getIp(HttpServletRequest request) {
         String ip = request.getHeader("X-Forwarded-For");
-        if (!Strings.isNullOrEmpty(ip) && !"unKnown".equalsIgnoreCase(ip)) {
+        if (!Strings.isNullOrEmpty(ip) && !LoggingConstant.IP_UNKNOWN.equalsIgnoreCase(ip)) {
             //多次反向代理后会有多个ip值，第一个ip才是真实ip
             int index = ip.indexOf(",");
             if (index != -1) {
@@ -93,7 +99,7 @@ public class RequestLoggingInterceptor extends HandlerInterceptorAdapter {
             }
         }
         ip = request.getHeader("X-Real-IP");
-        if (!Strings.isNullOrEmpty(ip) && !"unKnown".equalsIgnoreCase(ip)) {
+        if (!Strings.isNullOrEmpty(ip) && !LoggingConstant.IP_UNKNOWN.equalsIgnoreCase(ip)) {
             return ip;
         }
         return request.getRemoteAddr();

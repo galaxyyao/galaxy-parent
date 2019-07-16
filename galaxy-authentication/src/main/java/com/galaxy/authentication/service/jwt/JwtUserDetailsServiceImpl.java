@@ -14,6 +14,11 @@ import org.springframework.stereotype.Service;
 import com.galaxy.authentication.domain.entity.User;
 import com.galaxy.authentication.exception.AuthenticationException;
 
+/**
+ * @author: 姚皓
+ * @date: 2019/7/16 11:38
+ * @description:
+ */
 @Service
 public class JwtUserDetailsServiceImpl implements UserDetailsService {
 
