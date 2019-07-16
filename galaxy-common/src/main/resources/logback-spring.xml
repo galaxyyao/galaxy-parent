@@ -8,25 +8,10 @@
         <!--<include resource="org/springframework/boot/logging/logback/defaults.xml"/>-->
         <!--<springProperty scope="context" name="application.name" source="spring.application.name"/>-->
 
-        <!--<include resource="appenders/file-appender.xml"/>-->
-        <include resource="appenders/loginfo-appender.xml"/>
+        <include resource="appenders/file-appender.xml"/>
 
         <!--<root level="info">-->
             <!--<appender-ref ref="FILE-ROLLING"/>-->
         <!--</root>-->
     </springProfile>
-
-    <!-- to record the logs via AMQP into RabbitMQ
-    <springProfile name="prod">
-        <springProperty scope="context" name="rabbitmq.host" source="rabbit-config.host1" defaultValue="localhost"/>
-        <springProperty scope="context" name="rabbitmq.port" source="spring.rabbitmq.port" defaultValue="5672"/>
-        <springProperty scope="context" name="rabbitmq.username" source="spring.rabbitmq.username" defaultValue="test"/>
-        <springProperty scope="context" name="rabbitmq.password" source="spring.rabbitmq.password" defaultValue="test"/>
-        <springProperty scope="context" name="rabbitmq.virtualHost" source="spring.rabbitmq.virtualHost"/>
-        <include resource="appenders/amqp-appender.xml"/>
-        <root level="warn">
-            <appender-ref ref="FILE"/>
-            <appender-ref ref="AMQP"/>
-        </root>
-    </springProfile>-->
 </configuration>
