@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.galaxy.common.exception.UnexpectedRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,30 +29,20 @@ public class ReflectionUtil {
 		/**
 		 * 更新
 		 */
-		UPDATE,
-		/**
-		 * 删除
-		 */
-		DELETE
+		UPDATE
 	}
 
 	public static void fillCommonFields(Object object, ENTITY_SAVE_METHOD_ENUM entitySaveMethod, String operatorUserCode) {
 		switch (entitySaveMethod) {
 		case CREATE:
-			setField(object, "isDeleted", "0");
-			setField(object, "createdById", operatorUserCode);
-			setField(object, "createdTime", LocalDateTime.now());
-			setField(object, "lastModifiedById", operatorUserCode);
-			setField(object, "lastModifiedTime", LocalDateTime.now());
+			setField(object, "createUserCode", operatorUserCode);
+			setField(object, "createTime", LocalDateTime.now());
+			setField(object, "updateUserCode", operatorUserCode);
+			setField(object, "updateTime", LocalDateTime.now());
 			break;
 		case UPDATE:
-			setField(object, "lastModifiedById", operatorUserCode);
-			setField(object, "lastModifiedTime", LocalDateTime.now());
-			break;
-		case DELETE:
-			setField(object, "isDeleted", "1");
-			setField(object, "lastModifiedById", operatorUserCode);
-			setField(object, "lastModifiedTime", LocalDateTime.now());
+			setField(object, "updateUserCode", operatorUserCode);
+			setField(object, "updateTime", LocalDateTime.now());
 			break;
 		default:
 			break;
@@ -65,32 +56,34 @@ public class ReflectionUtil {
 			field.setAccessible(true);
 			field.set(object, fieldValue);
 		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
-			logger.error("Failed to set field:" + fieldName, e);
+			throw new UnexpectedRuntimeException("Failed to set field:" + fieldName, e);
 		}
 	}
 	
 	
-	public static Object getObjectVal(Object obj, String name) throws IllegalArgumentException, IllegalAccessException {
+	public static Object getObjectFieldValue(Object obj, String fieldName) {
 		Field[] fields = obj.getClass().getDeclaredFields();
 		for (Field field : fields) {
-			String fieldName = field.getName();
-			if (!name.equals(fieldName)) {
+			if (!fieldName.equals(field.getName())) {
 				continue;
 			}
 			field.setAccessible(true);
-			return field.get(obj);
+			try {
+				return field.get(obj);
+			} catch (IllegalAccessException e) {
+				throw new UnexpectedRuntimeException("Field not accessible:" + fieldName, e);
+			}
 		}
-		return "";
+		throw new UnexpectedRuntimeException("No such field:" + fieldName);
 	}
 	
 	public static String[] getCommonFields(String pkFieldName) {
-		List<String> fields = new ArrayList<String>();
+		List<String> fields = new ArrayList<>();
 		fields.add(pkFieldName);
-		fields.add("isDeleted");
-		fields.add("createdById");
-		fields.add("createdTime");
-		fields.add("lastModifiedById");
-		fields.add("lastModifiedTime");
+		fields.add("createUserCode");
+		fields.add("createTime");
+		fields.add("updateUserCode");
+		fields.add("updateTime");
 		return fields.toArray(new String[fields.size()]);
 	}
 }

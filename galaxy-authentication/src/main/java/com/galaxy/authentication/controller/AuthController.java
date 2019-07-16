@@ -75,7 +75,7 @@ public class AuthController {
 	private Cache<String, KeyPair> userKeyPair;
 
 	@RequestMapping(value = "${auth.jwt.login-path}", method = RequestMethod.POST)
-	public ResponseEntity<?> login(@RequestBody JwtAuthenticationRequest authenticationRequest)
+	public ResponseEntity<JsonResult> login(@RequestBody JwtAuthenticationRequest authenticationRequest)
 			throws BusinessException {
 		String userCode = authenticationRequest.getUsername().toLowerCase();
 		authenticate(userCode, authenticationRequest.getPassword());
@@ -83,13 +83,13 @@ public class AuthController {
 	}
 
 	@RequestMapping(value = "${auth.jwt.sso-path}", method = RequestMethod.POST)
-	public ResponseEntity<?> sso(@RequestParam String userCode, @RequestParam String ssoToken) throws BusinessException {
+	public ResponseEntity<JsonResult> sso(@RequestParam String userCode, @RequestParam String ssoToken) throws BusinessException {
 		userCode = userCode.toLowerCase();
 		ssoAuthenticate(userCode, ssoToken);
 		return generateJwtAuthenticationResponse(userCode);
 	}
 
-	private ResponseEntity<?> generateJwtAuthenticationResponse(String username) {
+	private ResponseEntity<JsonResult> generateJwtAuthenticationResponse(String username) {
 		final UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 		final String token = jwtTokenService.generateToken(userDetails);
 		HttpHeaders headers = new HttpHeaders();
@@ -103,16 +103,22 @@ public class AuthController {
 	}
 
 	@RequestMapping(value = "${auth.jwt.refresh-path}", method = RequestMethod.GET)
-	public ResponseEntity<?> refreshAndGetAuthenticationToken(HttpServletRequest request) {
+	public ResponseEntity<JsonResult> refreshAndGetAuthenticationToken(HttpServletRequest request) {
 		String authToken = request.getHeader(authProps.getJwt().getHeader());
 		final String token = authToken.substring(7);
 		String username = jwtTokenService.getUsernameFromToken(token);
 		JwtUser user = (JwtUser) userDetailsService.loadUserByUsername(username);
 		logger.info("User to refresh:" + user.getUsername());
 
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, RequestConstant.REQUEST_HEADER_KEY_AUTHORIZATION);
+		headers.add(HttpHeaders.AUTHORIZATION, RequestConstant.AUTHORIZATION_TOKEN_PREFIX + token);
+
 		if (jwtTokenService.canTokenBeRefreshed(token)) {
 			String refreshedToken = jwtTokenService.refreshToken(token);
-			return ResponseEntity.ok(new JwtAuthenticationResponse(refreshedToken));
+			return ResponseEntity.ok().headers(headers).body(new JsonResult<>(
+					CommonConstant.JSON_RESULT_SUCCESS, "",
+					refreshedToken));
 		} else {
 			return ResponseEntity.badRequest().body(null);
 		}

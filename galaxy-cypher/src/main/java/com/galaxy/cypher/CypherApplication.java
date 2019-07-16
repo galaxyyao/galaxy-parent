@@ -43,6 +43,6 @@ public class CypherApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... arg0) {
-
+		logger.info("Application started.");
 	}
 }

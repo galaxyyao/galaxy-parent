@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService {
             String url = authServerUrl + "/user/userByUserCode/" + userCode;
             ResponseEntity<JsonResult<User>> userResponseEntity = restTemplate.exchange(url, HttpMethod.GET, entity,
                     typeRef);
-            if (userResponseEntity != null && userResponseEntity.getBody() != null) {
+            if (userResponseEntity == null || userResponseEntity.getBody() == null) {
                 throw new BusinessException("ATH1001");
             }
             if (!CommonConstant.JSON_RESULT_SUCCESS.equals(userResponseEntity.getBody().getCode())) {

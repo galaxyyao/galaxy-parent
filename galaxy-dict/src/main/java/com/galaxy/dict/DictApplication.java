@@ -48,6 +48,6 @@ public class DictApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... arg0) throws Exception {
-
+		logger.info("Application started.");
 	}
 }

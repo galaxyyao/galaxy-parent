@@ -47,7 +47,7 @@ public class AuthenticationApplication implements CommandLineRunner {
 	}
 
 	@Override
-	public void run(String... arg0) throws Exception {
-
+	public void run(String... args) throws Exception {
+		logger.info("Application started.");
 	}
 }
