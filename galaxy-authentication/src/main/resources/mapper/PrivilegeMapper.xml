@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.galaxy.authentication">
+	<select id="selectPrivilegeFullCodesByUserCode" resultType="String">
+        select distinct p.C_PRIVILEGEFULLCODE as privilegeFullCode
+	    from TUSER u
+	    inner join TUSERROLERELATION urrel
+	    on u.C_USERCODE=urrel.C_USERCODE
+	    inner join TROLEPRIVILEGERELATION rprel
+	    on urrel.C_ROLECODE=rprel.C_ROLECODE
+	    inner join TPRIVILEGE p
+	    on rprel.C_PRIVILEGEFULLCODE=p.C_PRIVILEGEFULLCODE
+	    where u.C_USERCODE=#{userCode}
+    </select>
+    
+    <select id="selectUserMenuAndPagesByUserCode" resultType="Privilege">
+        select distinct p.C_PRIVILEGEID AS privilegeId
+          , p.C_PRIVILEGECODE as privilegeCode
+          , p.C_PRIVILEGENAME as privilegeName
+          , p.C_PRIVILEGEFULLCODE as privilegeFullCode
+          , p.C_PARENTFULLCODE as parentFullCode
+          , p.C_PRIVILEGETYPE as privilegeType
+          , p.C_PRIVILEGEURL as privilegeUrl
+          , p.C_ICON as icon
+          , p.L_SORTID as sortId
+          , p.C_PRIVILEGEDESC as privilegeDesc
+	    from TUSER u
+	    inner join TUSERROLERELATION urrel
+	    on u.C_USERCODE=urrel.C_USERCODE
+	    inner join TROLEPRIVILEGERELATION rprel
+	    on urrel.C_ROLECODE=rprel.C_ROLECODE
+	    inner join TPRIVILEGE p
+	    on rprel.C_PRIVILEGEFULLCODE=p.C_PRIVILEGEFULLCODE
+	    where u.C_USERCODE=#{userCode}
+	    and p.C_PRIVILEGETYPE in
+		<foreach item="privilegeType" index="index" collection="privilegeTypes" open="(" separator="," close=")">
+	          #{privilegeType}
+	    </foreach>
+    </select>
+
+</mapper>

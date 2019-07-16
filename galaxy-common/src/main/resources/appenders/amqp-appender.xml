@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Amqp appender logback configuration provided for import, equivalent to the programmatic initialization performed by Boot
+ - default <exchangeName> is "logs"
+ - default <type> is "topic"
+-->
+
+<included>
+    <appender name="AMQP" class="org.springframework.amqp.rabbit.logback.AmqpAppender">
+        <layout>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %5p %c{1}:%L - %msg%n</pattern>
+        </layout>
+
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>${rabbitmq.log_level}</level>
+        </filter>
+
+        <host>${rabbitmq.host}</host>
+        <port>${rabbitmq.port}</port>
+        <username>${rabbitmq.username}</username>
+        <password>${rabbitmq.password}</password>
+        <virtualHost>${rabbitmq.virtualHost}</virtualHost>
+        <exchangeName>amq.direct</exchangeName>
+        <exchangeType>direct</exchangeType>
+        <routingKeyPattern>%p</routingKeyPattern>
+
+        <declareExchange>true</declareExchange>
+        <generateId>true</generateId>
+        <charset>UTF-8</charset>
+        <durable>true</durable>
+        <deliveryMode>PERSISTENT</deliveryMode>
+    </appender>
+</included>
