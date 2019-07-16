@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.galaxy.authentication.domain.custom.sys.BindUserOrgRequest;
 import com.galaxy.authentication.domain.entity.Org;
-import com.galaxy.authentication.domain.entity.User;
 import com.galaxy.authentication.service.sys.OrgService;
 import com.galaxy.common.constant.CommonConstant;
 import com.galaxy.common.exception.BusinessException;
@@ -60,7 +59,7 @@ public class OrgController {
 	
 	@RequestMapping(value = "/children/{parentFullCode}", method = RequestMethod.GET)
 	public JsonResult<List<Org>> getChildren(@PathVariable String parentFullCode) {
-		List<Org> orgs = orgService.getChildOrgs(parentFullCode);
+		List<Org> orgs = orgService.getChildOrgList(parentFullCode);
 		return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS, "", orgs);
 	}
 	

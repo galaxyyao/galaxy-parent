@@ -39,7 +39,7 @@ public class OrgServiceImpl implements OrgService {
 	}
 
 	@Override
-	public List<Org> getChildOrgs(String parentFullCode) {
+	public List<Org> getChildOrgList(String parentFullCode) {
 		return orgRepository.findByParentFullCode(parentFullCode);
 	}
 

@@ -16,8 +16,20 @@ import java.util.Optional;
  */
 @Repository
 public interface RoleRepository extends JpaRepository<Role, String> {
+	/**
+	 * 根据角色编码，找到角色对象
+	 * @param roleCode
+	 * @return
+	 */
 	Optional<Role> findByRoleCode(String roleCode);
 
+	/**
+	 * 以忽视大小写的角色编码或角色名作为关键字，找到带分页的角色列表
+	 * @param roleName
+	 * @param roleCode
+	 * @param pageable
+	 * @return
+	 */
 	Page<Role> findByRoleNameIgnoreCaseContainingOrRoleCodeIgnoreCaseContaining(String roleName, String roleCode,
 			Pageable pageable);
 }

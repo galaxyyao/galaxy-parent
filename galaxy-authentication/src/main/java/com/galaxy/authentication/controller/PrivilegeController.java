@@ -74,7 +74,7 @@ public class PrivilegeController {
         if (AuthConstant.PRIVILEGE_ROOT_CODE.equals(privilegeFullCode)) {
             privilegeFullCode = null;
         }
-        List<Privilege> userChildrenPrivilege = privilegeService.getUserChildrenPrivilege(privilegeFullCode);
+        List<Privilege> userChildrenPrivilege = privilegeService.getCurrentUserChildrenPrivileges(privilegeFullCode);
         return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS, "", userChildrenPrivilege);
     }
 
@@ -105,13 +105,13 @@ public class PrivilegeController {
 
     @RequestMapping(value = "/userPageAuthority/{pagePrivilegeFullCode}", method = RequestMethod.GET)
     public JsonResult<List<String>> getUserPageAuthority(@PathVariable String pagePrivilegeFullCode) throws BusinessException {
-        List<String> userPageAuthorities = privilegeService.getUserDescendantPrivilegeFullCodes(pagePrivilegeFullCode);
+        List<String> userPageAuthorities = privilegeService.getCurrentUserDescendantPrivilegeFullCodes(pagePrivilegeFullCode);
         return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS, "", userPageAuthorities);
     }
 
     @RequestMapping(value = "/userPrivilege", method = RequestMethod.GET)
     public JsonResult<List<Privilege>> getUserPrivilege() throws BusinessException {
-        List<Privilege> userPrivilege = privilegeService.getUserPrivilege();
+        List<Privilege> userPrivilege = privilegeService.getUserPrivileges();
         return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS, "", userPrivilege);
     }
 
@@ -155,7 +155,7 @@ public class PrivilegeController {
     @RequestMapping(value = "/rolePrivilegeLeaf/{roleCode}", method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('sys_privilege')")
     public JsonResult<List<String>> getRolePrivilegeLeaf(@PathVariable String roleCode) {
-        List<String> leafPrivilegeFullCodes = privilegeService.getRolePrivilegeLeaf(roleCode);
+        List<String> leafPrivilegeFullCodes = privilegeService.getLeafPrivilegeFullCodesByRoleCode(roleCode);
         return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS, "", leafPrivilegeFullCodes);
     }
 }

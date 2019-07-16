@@ -86,7 +86,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
     }
 
     @Override
-    public List<Privilege> getUserPrivilege() throws BusinessException {
+    public List<Privilege> getUserPrivileges() throws BusinessException {
         List<String> privilegeTypes = Arrays.asList("privilege_type_pcMenu", "privilege_type_pcPage",
                 "privilege_type_mobileMenu", "privilege_type_mobilePage", "privilege_type_authority");
         List<Privilege> flatPrivilegeList = privilegeDao
@@ -144,7 +144,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
     }
 
     @Override
-    public List<Privilege> getUserChildrenPrivilege(String privilegeFullCode) throws BusinessException {
+    public List<Privilege> getCurrentUserChildrenPrivileges(String privilegeFullCode) throws BusinessException {
         List<Privilege> childrenPrivilege = privilegeRepository.findByParentFullCode(privilegeFullCode);
         List<String> childrenPrivilegeFullCodes = childrenPrivilege.stream().map(Privilege::getPrivilegeFullCode)
                 .collect(Collectors.toList());
@@ -157,7 +157,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
     }
 
     @Override
-    public List<String> getUserDescendantPrivilegeFullCodes(String privilegeFullCode) throws BusinessException {
+    public List<String> getCurrentUserDescendantPrivilegeFullCodes(String privilegeFullCode) throws BusinessException {
         List<Privilege> descendantPrivilege = privilegeRepository
                 .findByPrivilegeFullCodeIgnoreCaseContaining(privilegeFullCode);
         List<String> descendantPrivilegeFullCodes = descendantPrivilege.stream().map(Privilege::getPrivilegeFullCode)
@@ -202,7 +202,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
     }
 
     @Override
-    public List<String> getRolePrivilegeLeaf(String roleCode) {
+    public List<String> getLeafPrivilegeFullCodesByRoleCode(String roleCode) {
         List<RolePrivilegeRelation> rolePrivilegeRelations = rolePrivilegeRelationRepository.findByRoleCode(roleCode);
         List<String> privilegeFullCodes = rolePrivilegeRelations.stream()
                 .map(RolePrivilegeRelation::getPrivilegeFullCode).collect(Collectors.toList());

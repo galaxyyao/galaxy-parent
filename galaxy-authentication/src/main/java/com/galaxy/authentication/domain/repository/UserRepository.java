@@ -21,11 +21,29 @@ import com.galaxy.authentication.domain.entity.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
 
+    /**
+     * 根据用户编码，找到用户
+     * @param userCode
+     * @return
+     */
     Optional<User> findByUserCode(String userCode);
 
+    /**
+     * 根据忽视大小写的用户编码 + 锁定标识 + 删除标识，找到用户
+     * @param userCode
+     * @param isLocked
+     * @param isDeleted
+     * @return
+     */
     @Cacheable("userByUserCode")
     Optional<User> findByUserCodeIgnoreCaseAndIsLockedAndIsDeleted(String userCode, String isLocked, String isDeleted);
 
+    /**
+     * 根据用户编码或用户姓名关键字，找到用户
+     * @param keyword
+     * @param pageable
+     * @return
+     */
     @Query(value = "SELECT u FROM User u WHERE (LOWER(u.userCode) like CONCAT('%',:keyword,'%')"
             + " OR LOWER(u.userName) like CONCAT('%',:keyword,'%')) AND u.isDeleted='0' AND u.isLocked='0'"
             , countQuery = "SELECT count(u.userCode) FROM User u"
@@ -33,5 +51,10 @@ public interface UserRepository extends JpaRepository<User, String> {
             "'%')) AND u.isDeleted='0' AND u.isLocked='0'")
     Page<User> findByKeyword(@Param("keyword") String keyword, Pageable pageable);
 
+    /**
+     * 根据机构完整编码，找到所属机构的用户
+     * @param orgFullCode
+     * @return
+     */
     List<User> findByOrgFullCodeIn(List<String> orgFullCode);
 }
