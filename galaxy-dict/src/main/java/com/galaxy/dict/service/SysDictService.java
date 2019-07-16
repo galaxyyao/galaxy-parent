@@ -11,26 +11,80 @@ import com.galaxy.dict.domain.entity.SysDict;
  * @description:
  */
 public interface SysDictService {
-	SysDict getSysDict(String sysDictFullCode);
+	/**
+	 * 根据字典完整编码，找到字典
+	 * @param sysDictFullCode
+	 * @return
+	 * @throws BusinessException
+	 */
+	SysDict getSysDict(String sysDictFullCode) throws BusinessException;
 
-	String getSysDictName(String sysDictFullCode);
+	/**
+	 * 根据字典完整编码，找到字典名
+	 * @param sysDictFullCode
+	 * @return
+	 * @throws BusinessException
+	 */
+	String getSysDictName(String sysDictFullCode) throws BusinessException;
 
+	/**
+	 * 根据父字典完整编码，找到子字典列表
+	 * @param parentFullCode
+	 * @return
+	 */
 	List<SysDict> getChildSysDicts(String parentFullCode);
 
-	String getBizDictCode(String sysDictFullCode);
+	/**
+	 * 根据字典完整编码，找到业务编码
+	 * @param sysDictFullCode
+	 * @return
+	 * @throws BusinessException
+	 */
+	String getBizDictCode(String sysDictFullCode) throws BusinessException;
 
-	String getSysDictFullCodeByBizDictCode(String bizDictCode);
+	/**
+	 * 根据父字典完整编码和业务编码，找到字典
+	 * @param parentFullCode
+	 * @param bizDictCode
+	 * @return
+	 * @throws BusinessException
+	 */
+	SysDict getSysDictByParentFullCodeAndBizDictCode(String parentFullCode, String bizDictCode) throws BusinessException;
 
-	SysDict getSysDictByParentFullCodeAndBizDictCode(String parentFullCode, String bizDictCode);
+	/**
+	 * 根据父字典完整编码和业务编码，找到字典名
+	 * @param parentFullCode
+	 * @param bizDictCode
+	 * @return
+	 * @throws BusinessException
+	 */
+	String getSysDictNameByParentFullCodeAndBizDictCode(String parentFullCode, String bizDictCode) throws BusinessException;
 
-	String getSysDictNameByParentFullCodeAndBizDictCode(String parentFullCode, String bizDictCode);
-
+	/**
+	 * 获取数据字典树
+	 * @return
+	 */
 	SysDict getSysDictTree();
 
+	/**
+	 * 添加数据字典
+	 * @param sysDict
+	 * @throws BusinessException
+	 */
 	void addSysDict(SysDict sysDict) throws BusinessException;
 
+	/**
+	 * 修改数据字典信息
+	 * @param sysDict
+	 * @throws BusinessException
+	 */
 	void editSysDict(SysDict sysDict) throws BusinessException;
 
+	/**
+	 * 删除数据字典
+	 * @param sysDictFullCode
+	 * @throws BusinessException
+	 */
 	void deleteSysDict(String sysDictFullCode) throws BusinessException;
 
 }

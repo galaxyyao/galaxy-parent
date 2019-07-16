@@ -23,14 +23,14 @@ public interface OrgRepository extends JpaRepository<Org, String>{
 	Optional<Org> findByOrgFullCode(String orgFullCode);
 
 	/**
-	 * 根据机构父节点编码，找到子机构列表
+	 * 根据父机构编码，找到子机构列表
 	 * @param parentFullCode
 	 * @return
 	 */
 	List<Org> findByParentFullCode(String parentFullCode);
 
 	/**
-	 * 根据机构父节点编码，找到子节点数量
+	 * 根据父机构编码，找到子节点数量
 	 * @param parentFullCode
 	 * @return
 	 */

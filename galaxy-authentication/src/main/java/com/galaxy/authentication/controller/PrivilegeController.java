@@ -86,7 +86,7 @@ public class PrivilegeController {
 
     @RequestMapping(value = "/privilegeTree", method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('sys_privilege')")
-    public JsonResult<Privilege> getPrivilegeTree() {
+    public JsonResult<Privilege> getPrivilegeTree() throws BusinessException {
         Privilege root = privilegeService.getPrivilegeTree();
         return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS, "", root);
     }
@@ -105,7 +105,8 @@ public class PrivilegeController {
 
     @RequestMapping(value = "/userPageAuthority/{pagePrivilegeFullCode}", method = RequestMethod.GET)
     public JsonResult<List<String>> getUserPageAuthority(@PathVariable String pagePrivilegeFullCode) throws BusinessException {
-        List<String> userPageAuthorities = privilegeService.getCurrentUserDescendantPrivilegeFullCodes(pagePrivilegeFullCode);
+        List<String> userPageAuthorities =
+                privilegeService.getCurrentUserDescendantPrivilegeFullCodes(pagePrivilegeFullCode);
         return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS, "", userPageAuthorities);
     }
 
@@ -146,9 +147,7 @@ public class PrivilegeController {
         }
         Privilege privilege = privilegeRepository.findByPrivilegeFullCode(privilegeFullCode)
                 .orElseThrow(() -> new BusinessException("ATH2006").setPlaceHolder(privilegeFullCode));
-        if (privilege != null) {
-            privilegeRepository.delete(privilege);
-        }
+        privilegeRepository.delete(privilege);
         return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS);
     }
 

@@ -98,7 +98,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
     }
 
     @Override
-    public Privilege getPrivilegeTree() {
+    public Privilege getPrivilegeTree() throws BusinessException {
         List<Privilege> flatPrivilegeList = privilegeRepository.findAll();
         List<Privilege> topLevelPrivilegeList = convertToPrivilegeTree(flatPrivilegeList);
         Privilege root = new Privilege();
@@ -114,7 +114,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
         return root;
     }
 
-    private List<Privilege> convertToPrivilegeTree(List<Privilege> flatPrivilegeList) {
+    private List<Privilege> convertToPrivilegeTree(List<Privilege> flatPrivilegeList) throws BusinessException {
         for (Privilege flatPrivilege : flatPrivilegeList) {
             flatPrivilege.setPrivilegeTypeText(sysDictService.getSysDictName(flatPrivilege.getPrivilegeType()));
         }

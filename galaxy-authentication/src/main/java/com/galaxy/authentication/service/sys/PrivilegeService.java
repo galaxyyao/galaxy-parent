@@ -45,8 +45,9 @@ public interface PrivilegeService {
 	/**
 	 * 获取所有的权限树
 	 * @return
+	 * @throws BusinessException
 	 */
-	Privilege getPrivilegeTree();
+	Privilege getPrivilegeTree() throws BusinessException;
 
 	/**
 	 * 根据父权限完整编码，获取当前用户有权限的子权限列表

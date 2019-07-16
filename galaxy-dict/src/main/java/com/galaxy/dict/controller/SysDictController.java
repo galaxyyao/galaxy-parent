@@ -37,6 +37,9 @@ public class SysDictController {
 		if (sysDict.getSysDictCode().contains(SysDictConstant.HIERARCHY_SEPARATOR)) {
 			throw new BusinessException("DIC1001").setPlaceHolder(sysDict.getSysDictCode());
 		}
+		// 去除误输入的空格
+		sysDict.setSysDictCode(sysDict.getSysDictCode().trim());
+		sysDict.setSysDictName(sysDict.getSysDictName().trim());
 		sysDictService.addSysDict(sysDict);
 		return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS);
 	}
@@ -44,12 +47,14 @@ public class SysDictController {
 	@RequestMapping(value = "/sysDict", method = RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
 	public JsonResult<Void> editSysDict(@RequestBody SysDict sysDict) throws BusinessException {
+		// 去除误输入的空格
+		sysDict.setSysDictName(sysDict.getSysDictName().trim());
 		sysDictService.editSysDict(sysDict);
 		return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS);
 	}
 
 	@RequestMapping(value = "/sysDict/{sysDictFullCode}", method = RequestMethod.GET)
-	public JsonResult<SysDict> getSysDict(@PathVariable String sysDictFullCode) {
+	public JsonResult<SysDict> getSysDict(@PathVariable String sysDictFullCode) throws BusinessException {
 		SysDict sysDict = sysDictService.getSysDict(sysDictFullCode);
 		return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS, "", sysDict);
 	}

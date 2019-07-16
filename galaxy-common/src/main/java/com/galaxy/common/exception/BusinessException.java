@@ -38,7 +38,7 @@ public class BusinessException extends Exception {
         super(cause);
         this.errorCode = errorCode;
         String detailErrorMessage = getDetailErrorMessage(errorCode);
-        if (detailErrorMessage != null) {
+        if (!Strings.isNullOrEmpty(detailErrorMessage)) {
             this.detailedErrorMessage = String.format("%s", detailErrorMessage);
         } else {
             this.detailedErrorMessage = errorCode;

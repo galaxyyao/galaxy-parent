@@ -30,35 +30,37 @@ public class SysDict implements Serializable {
 	@GenericGenerator(name = "system-uuid", strategy = "uuid")
 	@Column(name = "C_SYSDICTID")
 	private String sysDictId;
-	@Mapping(name = "sysDictCode")
+
 	@Column(name = "C_SYSDICTCODE")
 	private String sysDictCode;
-	@Mapping(name = "sysDictName")
+
 	@Column(name = "C_SYSDICTNAME")
 	private String sysDictName;
-	@Mapping(name = "sysDictFullCode")
+
 	@Column(name = "C_SYSDICTFULLCODE")
 	private String sysDictFullCode;
-	@Mapping(name = "parentFullCode")
+
 	@Column(name = "C_PARENTFULLCODE")
 	private String parentFullCode;
-	@Mapping(name = "bizDictCode")
+
 	@Column(name = "C_BIZDICTCODE")
 	private String bizDictCode;
-	@Mapping(name = "sortId")
+
 	@Column(name = "L_SORTID")
 	private Integer sortId;
-	@Mapping(name = "sysDictDesc")
+
 	@Column(name = "C_SYSDICTDESC")
 	private String sysDictDesc;
-	@Column(name = "C_ISDELETED")
-	private String isDeleted;
+
 	@Column(name = "C_CREATEDBYID")
 	private String createdById;
+
 	@Column(name = "D_CREATEDTIME")
 	private LocalDateTime createdTime;
+
 	@Column(name = "C_LASTMODIFIEDBYID")
 	private String lastModifiedById;
+
 	@Column(name = "D_LASTMODIFIEDTIME")
 	private LocalDateTime lastModifiedTime;
 	
@@ -115,12 +117,6 @@ public class SysDict implements Serializable {
 	}
 	public void setSysDictDesc(String sysDictDesc) {
 		this.sysDictDesc = sysDictDesc;
-	}
-	public String getIsDeleted() {
-		return isDeleted;
-	}
-	public void setIsDeleted(String isDeleted) {
-		this.isDeleted = isDeleted;
 	}
 	public String getCreatedById() {
 		return createdById;
