@@ -8,11 +8,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.galaxy.authentication.domain.repository.PrivilegeRepository;
 import com.galaxy.authentication.domain.repository.RolePrivilegeRelationRepository;
@@ -46,7 +42,7 @@ public class PrivilegeController {
     @Autowired
     private RolePrivilegeRelationRepository rolePrivilegeRelationRepository;
 
-    @RequestMapping(value = "/privilege", method = RequestMethod.PUT)
+    @PostMapping(value = "/privilege")
     @PreAuthorize("hasAuthority('sys_privilege')")
     @Transactional(rollbackFor = Exception.class)
     public JsonResult<Void> addPrivilege(@RequestBody Privilege privilege) throws BusinessException {
@@ -69,7 +65,7 @@ public class PrivilegeController {
         return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS);
     }
 
-    @RequestMapping(value = "/userChildrenPrivilege/{privilegeFullCode}", method = RequestMethod.GET)
+    @GetMapping(value = "/userChildrenPrivilege/{privilegeFullCode}")
     public JsonResult<List<Privilege>> getUserChildrenPrivilege(@PathVariable String privilegeFullCode) throws BusinessException {
         if (AuthConstant.PRIVILEGE_ROOT_CODE.equals(privilegeFullCode)) {
             privilegeFullCode = null;
@@ -78,45 +74,45 @@ public class PrivilegeController {
         return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS, "", userChildrenPrivilege);
     }
 
-    @RequestMapping(value = "/privilege/{privilegeFullCode}", method = RequestMethod.GET)
+    @GetMapping(value = "/privilege/{privilegeFullCode}")
     public JsonResult<Privilege> getPrivilege(@PathVariable String privilegeFullCode) throws BusinessException {
         Privilege privilege = privilegeService.getPrivilege(privilegeFullCode);
         return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS, "", privilege);
     }
 
-    @RequestMapping(value = "/privilegeTree", method = RequestMethod.GET)
+    @GetMapping(value = "/privilegeTree")
     @PreAuthorize("hasAuthority('sys_privilege')")
     public JsonResult<Privilege> getPrivilegeTree() throws BusinessException {
         Privilege root = privilegeService.getPrivilegeTree();
         return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS, "", root);
     }
 
-    @RequestMapping(value = "/userMenuTree/{deviceType}", method = RequestMethod.GET)
+    @GetMapping(value = "/userMenuTree/{deviceType}")
     public JsonResult<List<Privilege>> getUserMenuTree(@PathVariable String deviceType) throws BusinessException {
         List<Privilege> userMenuTree = privilegeService.getUserMenuTree(deviceType);
         return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS, "", userMenuTree);
     }
 
-    @RequestMapping(value = "/userPageTree/{deviceType}", method = RequestMethod.GET)
+    @GetMapping(value = "/userPageTree/{deviceType}")
     public JsonResult<List<Privilege>> getUserPageTree(@PathVariable String deviceType) throws BusinessException {
         List<Privilege> userPageTree = privilegeService.getUserPageTree(deviceType);
         return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS, "", userPageTree);
     }
 
-    @RequestMapping(value = "/userPageAuthority/{pagePrivilegeFullCode}", method = RequestMethod.GET)
+    @GetMapping(value = "/userPageAuthority/{pagePrivilegeFullCode}")
     public JsonResult<List<String>> getUserPageAuthority(@PathVariable String pagePrivilegeFullCode) throws BusinessException {
         List<String> userPageAuthorities =
                 privilegeService.getCurrentUserDescendantPrivilegeFullCodes(pagePrivilegeFullCode);
         return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS, "", userPageAuthorities);
     }
 
-    @RequestMapping(value = "/userPrivilege", method = RequestMethod.GET)
+    @GetMapping(value = "/userPrivilege")
     public JsonResult<List<Privilege>> getUserPrivilege() throws BusinessException {
         List<Privilege> userPrivilege = privilegeService.getUserPrivileges();
         return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS, "", userPrivilege);
     }
 
-    @RequestMapping(value = "/role/bind", method = RequestMethod.POST)
+    @PostMapping(value = "/role/bind")
     @Transactional(rollbackFor = Exception.class)
     public JsonResult<Void> bindRolePrivilege(@RequestBody BindRolePrivilegeRequest bindRolePrivilegeRequest) throws BusinessException {
         privilegeService.bindRolePrivileges(bindRolePrivilegeRequest.getRoleCode(),
@@ -124,7 +120,7 @@ public class PrivilegeController {
         return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS);
     }
 
-    @RequestMapping(value = "/privilege", method = RequestMethod.POST)
+    @PostMapping(value = "/privilege")
     @PreAuthorize("hasAuthority('sys_privilege')")
     @Transactional(rollbackFor = Exception.class)
     public JsonResult<Void> editPrivilege(@RequestBody Privilege privilege) throws BusinessException {
@@ -137,7 +133,7 @@ public class PrivilegeController {
         return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS);
     }
 
-    @RequestMapping(value = "/privilege/{privilegeFullCode}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/privilege/{privilegeFullCode}")
     @PreAuthorize("hasAuthority('sys_privilege')")
     @Transactional(rollbackFor = Exception.class)
     public JsonResult<Void> deletePrivilege(@PathVariable String privilegeFullCode) throws BusinessException {
@@ -151,7 +147,7 @@ public class PrivilegeController {
         return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS);
     }
 
-    @RequestMapping(value = "/rolePrivilegeLeaf/{roleCode}", method = RequestMethod.GET)
+    @GetMapping(value = "/rolePrivilegeLeaf/{roleCode}")
     @PreAuthorize("hasAuthority('sys_privilege')")
     public JsonResult<List<String>> getRolePrivilegeLeaf(@PathVariable String roleCode) {
         List<String> leafPrivilegeFullCodes = privilegeService.getLeafPrivilegeFullCodesByRoleCode(roleCode);

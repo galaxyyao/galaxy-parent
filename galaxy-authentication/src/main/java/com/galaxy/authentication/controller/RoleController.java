@@ -14,11 +14,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.galaxy.authentication.domain.repository.RolePrivilegeRelationRepository;
 import com.galaxy.authentication.domain.repository.RoleRepository;
@@ -56,7 +52,7 @@ public class RoleController {
 	@Autowired
 	private RolePrivilegeRelationRepository rolePrivilegeRelationRepository;
 
-	@RequestMapping(value = "/role", method = RequestMethod.PUT)
+	@PostMapping(value = "/role")
 	@PreAuthorize("hasAuthority('sys_role')")
 	@Transactional(rollbackFor = Exception.class)
 	public JsonResult<Void> addRole(@RequestBody Role role) throws BusinessException {
@@ -65,13 +61,13 @@ public class RoleController {
 		return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS);
 	}
 
-	@RequestMapping(value = "/role/{roleCode}", method = RequestMethod.GET)
+	@GetMapping(value = "/role/{roleCode}")
 	public JsonResult<Role> getRole(@PathVariable String roleCode) throws BusinessException {
 		Role role = roleService.getRole(roleCode);
 		return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS, "", role);
 	}
 
-	@RequestMapping(value = "/user/bind", method = RequestMethod.POST)
+	@PostMapping(value = "/user/bind")
 	@Transactional(rollbackFor = Exception.class)
 	@PreAuthorize("hasAuthority('sys_role')")
 	@CacheEvict(value = {"userRole"}, key = "#bindUserRoleRequest.getUserCode()" )
@@ -80,7 +76,7 @@ public class RoleController {
 		return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS);
 	}
 
-	@RequestMapping(value = "/role", method = RequestMethod.POST)
+	@PutMapping(value = "/role")
 	@PreAuthorize("hasAuthority('sys_role')")
 	@Transactional(rollbackFor = Exception.class)
 	public JsonResult<Void> editRole(@RequestBody Role role) throws BusinessException {
@@ -92,7 +88,7 @@ public class RoleController {
 		return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS);
 	}
 
-	@RequestMapping(value = "/role/{roleCode}", method = RequestMethod.DELETE)
+	@DeleteMapping(value = "/role/{roleCode}")
 	@PreAuthorize("hasAuthority('sys_role')")
 	@Transactional(rollbackFor = Exception.class)
 	public JsonResult<Void> deleteRole(@PathVariable String roleCode) throws BusinessException {
@@ -109,7 +105,7 @@ public class RoleController {
 		return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS);
 	}
 
-	@RequestMapping(value = "/roles/list", method = RequestMethod.POST)
+	@PostMapping(value = "/roles/list")
 	@PreAuthorize("hasAuthority('sys_role')")
 	public JsonResult<Page<Role>> getRoles(@RequestBody RolesRequest rolesRequest) {
 		Pageable pageable = PageRequest.of(rolesRequest.getPageObject().getPageNumber(),
@@ -119,7 +115,7 @@ public class RoleController {
 		return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS, "", roles);
 	}
 
-	@RequestMapping(value = "/userRole/{userCode}", method = RequestMethod.GET)
+	@GetMapping(value = "/userRole/{userCode}")
 	@PreAuthorize("hasAuthority('sys_role')")
 	public JsonResult<List<String>> getUserRole(@PathVariable String userCode) {
 		List<String> roleCodes = roleService.getUserRoles(userCode);

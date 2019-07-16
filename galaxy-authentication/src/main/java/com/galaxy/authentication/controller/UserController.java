@@ -13,11 +13,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.galaxy.authentication.domain.custom.sys.UsersRequest;
 import com.galaxy.authentication.domain.entity.User;
@@ -47,19 +43,19 @@ public class UserController {
 	@Autowired
 	private AuthProperties authProps;
 
-	@RequestMapping(value = "/currentUser", method = RequestMethod.GET)
+	@GetMapping(value = "/currentUser")
 	public JsonResult<User> getCurrentUser() throws BusinessException {
 		User currentUser = userService.getCurrentUser();
 		return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS, "", currentUser);
 	}
 
-	@RequestMapping(value = "/userByAuthToken/get", method = RequestMethod.POST)
+	@PostMapping(value = "/userByAuthToken/get")
 	public JsonResult<User> getUserByAuthToken(@RequestBody JwtTokenRequest jwtTokenRequest) throws BusinessException {
 		User user = userService.getValidUserByAuthToken(jwtTokenRequest.getToken());
 		return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS, "", user);
 	}
 
-	@RequestMapping(value = "/users/list", method = RequestMethod.POST)
+	@PostMapping(value = "/users/list")
 	@PreAuthorize("hasAuthority('sys_user')")
 	public JsonResult<Page<User>> getUsers(@RequestBody UsersRequest usersRequest) {
 		Pageable pageable = PageRequest.of(usersRequest.getPageObject().getPageNumber(),
@@ -68,7 +64,7 @@ public class UserController {
 		return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS, "", users);
 	}
 
-	@RequestMapping(value = "/refresh", method = RequestMethod.GET)
+	@GetMapping(value = "/refresh")
 	@CacheEvict(value = {"user", "jwtUser", "userByUserCode", "userPrivilegeFullCodes", "userPrivileges", "userRole"},
 			allEntries = true)
 	@Scheduled(fixedDelay = 60 * 60 * 1000 ,  initialDelay = 500)
@@ -76,7 +72,7 @@ public class UserController {
 		return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS);
 	}
 
-	@RequestMapping(value = "/userByUserCode/{userCode:.+}", method = RequestMethod.GET)
+	@GetMapping(value = "/userByUserCode/{userCode:.+}")
 	public JsonResult<User> getUserByUserCode(@PathVariable String userCode) throws BusinessException {
 		User user = userService.getValidUserByUserCode(userCode);
 		if (user == null) {

@@ -27,7 +27,7 @@ public class OrgController {
 	@Autowired
 	private OrgService orgService;
 
-	@RequestMapping(value = "/org", method = RequestMethod.PUT)
+	@PostMapping(value = "/org")
 	@Transactional(rollbackFor = Exception.class)
 	public JsonResult<Void> addOrg(@RequestBody Org org) throws BusinessException {
 		if (org.getOrgCode().contains(AuthConstant.HIERARCHY_SEPARATOR)) {
@@ -37,46 +37,46 @@ public class OrgController {
 		return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS);
 	}
 
-	@RequestMapping(value = "/org", method = RequestMethod.POST)
+	@PutMapping(value = "/org")
 	@Transactional(rollbackFor = Exception.class)
 	public JsonResult<Void> editOrg(@RequestBody Org org) throws BusinessException {
 		orgService.editOrg(org);
 		return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS);
 	}
 
-	@RequestMapping(value = "/org/{orgFullCode}", method = RequestMethod.GET)
+	@GetMapping(value = "/org/{orgFullCode}")
 	public JsonResult<Org> getOrg(@PathVariable String orgFullCode) throws BusinessException {
 		Org org = orgService.getOrg(orgFullCode);
 		return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS, "", org);
 	}
 
-	@RequestMapping(value = "/org/{orgFullCode}", method = RequestMethod.DELETE)
+	@DeleteMapping(value = "/org/{orgFullCode}")
 	@Transactional(rollbackFor = Exception.class)
 	public JsonResult<Void> deleteOrg(@PathVariable String orgFullCode) throws BusinessException {
 		orgService.deleteOrg(orgFullCode);
 		return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS);
 	}
 	
-	@RequestMapping(value = "/children/{parentFullCode}", method = RequestMethod.GET)
+	@GetMapping(value = "/children/{parentFullCode}")
 	public JsonResult<List<Org>> getChildren(@PathVariable String parentFullCode) {
 		List<Org> orgs = orgService.getChildOrgList(parentFullCode);
 		return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS, "", orgs);
 	}
 	
-	@RequestMapping(value = "/orgTree", method = RequestMethod.GET)
+	@GetMapping(value = "/orgTree")
 	public JsonResult<Org> getOrgTree() {
 		Org root = orgService.getOrgTree();
 		return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS,"", root);
 	}
 	
-	@RequestMapping(value = "/user/bind", method = RequestMethod.POST)
+	@PostMapping(value = "/user/bind")
 	@Transactional(rollbackFor = Exception.class)
 	public JsonResult<Void> bindUserOrg(@RequestBody BindUserOrgRequest bindUserOrgRequest) throws BusinessException {
 		orgService.bindUserOrg(bindUserOrgRequest.getUserCode(), bindUserOrgRequest.getOrgCode());
 		return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS);
 	}
 
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	@GetMapping(value = "/list")
 	public JsonResult<List<Org>> getOrgList(){
 		List<Org> list = orgService.getOrgList();
 		return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS, "", list);
