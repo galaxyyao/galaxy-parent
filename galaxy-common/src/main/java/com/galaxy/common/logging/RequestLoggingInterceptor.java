@@ -50,7 +50,7 @@ public class RequestLoggingInterceptor extends HandlerInterceptorAdapter {
             }
         }
         Long startTime = Instant.now().toEpochMilli();
-        Long requestId = IdWorker.generateId();
+        String requestId = IdWorker.generateUuid();
         String userTokenLog = Strings.isNullOrEmpty(username) ? "no user token" : "loginId:" + username;
         logger.info("[request.log]Request id:" + requestId + ", ip:" + getIp(request) + ", deviceId:" + deviceId + ", url:" + request.getRequestURL().toString() +
                 ", start time=" + LocalDateTime.now() + ", " + userTokenLog);
