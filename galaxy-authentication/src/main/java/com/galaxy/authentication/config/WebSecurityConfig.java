@@ -24,7 +24,7 @@ import org.springframework.security.web.firewall.StrictHttpFirewall;
 import com.galaxy.authentication.security.JwtAuthenticationEntryPoint;
 import com.galaxy.authentication.security.JwtAuthorizationTokenFilter;
 import com.galaxy.authentication.service.jwt.JwtTokenService;
-import com.galaxy.authentication.service.jwt.JwtUserDetailsService;
+import com.galaxy.authentication.service.jwt.JwtUserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
@@ -41,7 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private JwtTokenService jwtTokenService;
 
     @Autowired
-    private JwtUserDetailsService jwtUserDetailsService;
+    private JwtUserDetailsServiceImpl jwtUserDetailsService;
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {

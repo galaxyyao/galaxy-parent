@@ -42,7 +42,7 @@ public class PrivilegeController {
 
     @RequestMapping(value = "/privilege", method = RequestMethod.PUT)
     @PreAuthorize("hasAuthority('sys_privilege')")
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public JsonResult<Void> addPrivilege(@RequestBody Privilege privilege) throws BusinessException {
         if (privilege.getPrivilegeCode().contains("_")) {
             throw new BusinessException("ATH2003").setPlaceHolder(privilege.getPrivilegeCode());
@@ -110,7 +110,7 @@ public class PrivilegeController {
     }
 
     @RequestMapping(value = "/role/bind", method = RequestMethod.POST)
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public JsonResult<Void> bindRolePrivilege(@RequestBody BindRolePrivilegeRequest bindRolePrivilegeRequest) throws BusinessException {
         privilegeService.bindRolePrivileges(bindRolePrivilegeRequest.getRoleCode(),
                 bindRolePrivilegeRequest.getPrivilegeFullCodes());
@@ -119,7 +119,7 @@ public class PrivilegeController {
 
     @RequestMapping(value = "/privilege", method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('sys_privilege')")
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public JsonResult<Void> editPrivilege(@RequestBody Privilege privilege) throws BusinessException {
         Privilege privilegeFromDb = privilegeRepository.findByPrivilegeFullCode(privilege.getPrivilegeFullCode())
                 .orElseThrow(() -> new BusinessException("ATH2006").setPlaceHolder(privilege.getPrivilegeFullCode()));
@@ -132,7 +132,7 @@ public class PrivilegeController {
 
     @RequestMapping(value = "/privilege/{privilegeFullCode}", method = RequestMethod.DELETE)
     @PreAuthorize("hasAuthority('sys_privilege')")
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public JsonResult<Void> deletePrivilege(@PathVariable String privilegeFullCode) throws BusinessException {
         int rolePrivilegeBindNum = rolePrivilegeRelationRepository.countByPrivilegeFullCode(privilegeFullCode);
         if (rolePrivilegeBindNum > 0) {

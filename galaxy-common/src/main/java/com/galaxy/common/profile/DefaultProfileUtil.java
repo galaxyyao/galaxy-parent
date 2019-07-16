@@ -3,6 +3,7 @@ package com.galaxy.common.profile;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.galaxy.common.constant.CommonConstant;
 import org.springframework.boot.SpringApplication;
 import org.springframework.core.env.Environment;
 
@@ -28,7 +29,7 @@ public final class DefaultProfileUtil {
 	 *            the Spring application
 	 */
 	public static void addDefaultProfile(SpringApplication app) {
-		Map<String, Object> defProperties = new HashMap<>();
+		Map<String, Object> defProperties = new HashMap<>(CommonConstant.HASHMAP_DEFAULT_SIZE);
 		/*
 		 * The default profile to use when no other profiles are defined This cannot be
 		 * set in the <code>application.yml</code> file. See

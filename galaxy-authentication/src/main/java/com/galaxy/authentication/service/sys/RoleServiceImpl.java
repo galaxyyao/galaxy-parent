@@ -26,6 +26,7 @@ public class RoleServiceImpl implements RoleService{
 	@Autowired
 	private UserRoleRelationRepository userRoleRelationRepository;
 
+	@Override
 	public Role getRole(String roleCode) throws BusinessException {
 		return roleRepository.findByRoleCode(roleCode)
 				.orElseThrow(()->new BusinessException("ATH2008").setPlaceHolder(roleCode));
@@ -35,6 +36,7 @@ public class RoleServiceImpl implements RoleService{
 		    @CacheEvict(value = "userPrivilegeFullCodes", key = "#userCode"),
 		    @CacheEvict(value = "userPrivileges", key = "#userCode")
 		})
+	@Override
 	public void bindUserRole(String userCode, List<String> roleCodes) throws BusinessException {
 		List<UserRoleRelation> existingUserRoleRelations = userRoleRelationRepository.findByUserCode(userCode);
 		List<String> existingUserRoleCodes = existingUserRoleRelations.stream().map(UserRoleRelation::getRoleCode)
@@ -64,13 +66,15 @@ public class RoleServiceImpl implements RoleService{
 	}
 
 	@Cacheable("userRole")
+	@Override
 	public List<String> getUserRoles(String userCode) {
 		List<UserRoleRelation> userRoleRelations = userRoleRelationRepository.findByUserCode(userCode);
 		List<String> roleCodes = userRoleRelations.stream().map(UserRoleRelation::getRoleCode)
 				.collect(Collectors.toList());
 		return roleCodes;
 	}
-	
+
+	@Override
 	public Boolean hasRole(String userCode, String roleCode) {
 		return userRoleRelationRepository.countByUserCodeAndRoleCode(userCode, roleCode) > 0;
 	}

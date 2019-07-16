@@ -24,7 +24,7 @@ public class OrgController {
 	private OrgService orgService;
 
 	@RequestMapping(value = "/org", method = RequestMethod.PUT)
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public JsonResult<Void> addOrg(@RequestBody Org org) throws BusinessException {
 		if (org.getOrgCode().contains("_")) {
 			throw new BusinessException("ORG1001").setPlaceHolder(org.getOrgCode());
@@ -34,7 +34,7 @@ public class OrgController {
 	}
 
 	@RequestMapping(value = "/org", method = RequestMethod.POST)
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public JsonResult<Void> editOrg(@RequestBody Org org) throws BusinessException {
 		orgService.editOrg(org);
 		return new JsonResult<Void>(CommonConstant.JSON_RESULT_SUCCESS);
@@ -47,7 +47,7 @@ public class OrgController {
 	}
 
 	@RequestMapping(value = "/org/{orgFullCode}", method = RequestMethod.DELETE)
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public JsonResult<Void> deleteOrg(@PathVariable String orgFullCode) throws BusinessException {
 		orgService.deleteOrg(orgFullCode);
 		return new JsonResult<Void>(CommonConstant.JSON_RESULT_SUCCESS);
@@ -66,7 +66,7 @@ public class OrgController {
 	}
 	
 	@RequestMapping(value = "/user/bind", method = RequestMethod.POST)
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public JsonResult<Void> bindUserOrg(@RequestBody BindUserOrgRequest bindUserOrgRequest) throws BusinessException {
 		orgService.bindUserOrg(bindUserOrgRequest.getUserCode(), bindUserOrgRequest.getOrgCode());
 		return new JsonResult<Void>(CommonConstant.JSON_RESULT_SUCCESS);

@@ -38,11 +38,13 @@ public class PrivilegeServiceImpl implements PrivilegeService {
     @Autowired
     private RolePrivilegeRelationRepository rolePrivilegeRelationRepository;
 
+    @Override
     public Privilege getPrivilege(String privilegeFullCode) throws BusinessException {
         return privilegeRepository.findByPrivilegeFullCode(privilegeFullCode)
                 .orElseThrow(() -> new BusinessException("ATH2006").setPlaceHolder(privilegeFullCode));
     }
 
+    @Override
     public List<Privilege> getUserMenuTree(String deviceType) throws BusinessException {
         List<String> privilegeTypes = null;
         switch (deviceType) {
@@ -60,6 +62,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
         return convertToPrivilegeTree(flatPrivilegeList);
     }
 
+    @Override
     public List<Privilege> getUserPageTree(String deviceType) throws BusinessException {
         List<String> privilegeTypes = null;
         switch (deviceType) {
@@ -77,6 +80,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
         return convertToPrivilegeTree(flatPrivilegeList);
     }
 
+    @Override
     public List<Privilege> getUserPrivilege() throws BusinessException {
         List<String> privilegeTypes = Arrays.asList("privilege_type_pcMenu", "privilege_type_pcPage",
                 "privilege_type_mobileMenu", "privilege_type_mobilePage", "privilege_type_authority");
@@ -88,6 +92,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
         return flatPrivilegeList;
     }
 
+    @Override
     public Privilege getPrivilegeTree() {
         List<Privilege> flatPrivilegeList = privilegeRepository.findAll();
         List<Privilege> topLevelPrivilegeList = convertToPrivilegeTree(flatPrivilegeList);
@@ -133,6 +138,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
         }
     }
 
+    @Override
     public List<Privilege> getUserChildrenPrivilege(String privilegeFullCode) throws BusinessException {
         List<Privilege> childrenPrivilege = privilegeRepository.findByParentFullCode(privilegeFullCode);
         List<String> childrenPrivilegeFullCodes = childrenPrivilege.stream().map(Privilege::getPrivilegeFullCode)
@@ -145,6 +151,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
         return userChildrenPrivilege;
     }
 
+    @Override
     public List<String> getUserDescendantPrivilegeFullCodes(String privilegeFullCode) throws BusinessException {
         List<Privilege> descendantPrivilege = privilegeRepository
                 .findByPrivilegeFullCodeIgnoreCaseContaining(privilegeFullCode);
@@ -157,6 +164,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
     }
 
     @CacheEvict(value = {"userPrivilegeFullCodes", "userPrivileges"}, allEntries = true)
+    @Override
     public void bindRolePrivileges(String roleCode, List<String> privilegeFullCodes) throws BusinessException {
         List<RolePrivilegeRelation> existingRolePrivilegeRelations = rolePrivilegeRelationRepository
                 .findByRoleCode(roleCode);
@@ -188,6 +196,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
         }
     }
 
+    @Override
     public List<String> getRolePrivilegeLeaf(String roleCode) {
         List<RolePrivilegeRelation> rolePrivilegeRelations = rolePrivilegeRelationRepository.findByRoleCode(roleCode);
         List<String> privilegeFullCodes = rolePrivilegeRelations.stream()

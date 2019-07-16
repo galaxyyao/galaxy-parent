@@ -27,7 +27,7 @@ public class SysDictController {
 	private SysDictService sysDictService;
 
 	@RequestMapping(value = "/sysDict", method = RequestMethod.PUT)
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public JsonResult<Void> addSysDict(@RequestBody SysDict sysDict) throws BusinessException {
 		if (sysDict.getSysDictCode().contains("_")) {
 			throw new BusinessException("DIC1001").setPlaceHolder(sysDict.getSysDictCode());
@@ -37,7 +37,7 @@ public class SysDictController {
 	}
 
 	@RequestMapping(value = "/sysDict", method = RequestMethod.POST)
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public JsonResult<Void> editSysDict(@RequestBody SysDict sysDict) throws BusinessException {
 		sysDictService.editSysDict(sysDict);
 		return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS);
@@ -50,7 +50,7 @@ public class SysDictController {
 	}
 
 	@RequestMapping(value = "/sysDict/{sysDictFullCode}", method = RequestMethod.DELETE)
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public JsonResult<Void> deleteSysDict(@PathVariable String sysDictFullCode) throws BusinessException {
 		sysDictService.deleteSysDict(sysDictFullCode);
 		return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS);

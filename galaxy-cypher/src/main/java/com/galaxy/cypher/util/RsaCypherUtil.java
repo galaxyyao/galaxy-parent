@@ -1,40 +1,17 @@
 package com.galaxy.cypher.util;
 
-import java.security.InvalidKeyException;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.util.Base64;
-
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import java.security.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+/**
+ * @author: 姚皓
+ * @date: 2019/7/16 11:38
+ * @description:
+ */
 public class RsaCypherUtil {
-	private static Logger logger = LoggerFactory.getLogger(RsaCypherUtil.class);
-
-	public static void main(String[] args) throws Exception {
-		// generate public and private keys
-		KeyPair keyPair = buildKeyPair();
-		PublicKey publicKey = keyPair.getPublic();
-		PrivateKey privateKey = keyPair.getPrivate();
-		System.out.println(Base64.getEncoder().encodeToString(publicKey.getEncoded()));
-
-		// encrypt the message
-		byte[] encrypted = encrypt(publicKey, "This is a secret message");
-		logger.info(new String(encrypted)); // <<encrypted message>>
-
-		// decrypt the message
-		byte[] secret = decrypt(privateKey, encrypted);
-		logger.info(new String(secret)); // This is a secret message
-	}
-
 	public static KeyPair buildKeyPair() throws NoSuchAlgorithmException {
 		final int keySize = 2048;
 		KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");

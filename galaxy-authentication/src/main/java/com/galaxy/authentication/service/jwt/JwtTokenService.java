@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 import com.galaxy.authentication.config.AuthProperties;
+import com.galaxy.common.constant.CommonConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -58,7 +59,7 @@ public class JwtTokenService {
 	}
 
 	public String generateToken(UserDetails userDetails) {
-		Map<String, Object> claims = new HashMap<>();
+		Map<String, Object> claims = new HashMap<>(CommonConstant.HASHMAP_DEFAULT_SIZE);
 		return doGenerateToken(claims, userDetails.getUsername());
 	}
 

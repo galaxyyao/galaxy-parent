@@ -15,7 +15,7 @@ import com.galaxy.authentication.domain.entity.User;
 import com.galaxy.authentication.exception.AuthenticationException;
 
 @Service
-public class JwtUserDetailsService implements UserDetailsService {
+public class JwtUserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired
 	private JwtUserFactory jwtUserFactory;

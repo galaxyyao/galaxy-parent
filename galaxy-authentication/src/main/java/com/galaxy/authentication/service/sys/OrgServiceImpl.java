@@ -16,6 +16,11 @@ import com.galaxy.common.util.ReflectionUtil;
 import com.galaxy.common.util.ReflectionUtil.ENTITY_SAVE_METHOD_ENUM;
 import com.google.common.base.Strings;
 
+/**
+ * @author: 姚皓
+ * @date: 2019/7/16 11:38
+ * @description:
+ */
 @Service
 public class OrgServiceImpl implements OrgService {
 	@Autowired
@@ -27,15 +32,18 @@ public class OrgServiceImpl implements OrgService {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Override
 	public Org getOrg(String orgFullCode) throws BusinessException {
 		return orgRepository.findByOrgFullCode(orgFullCode)
 				.orElseThrow(()->new BusinessException("ORG1002").setPlaceHolder(orgFullCode));
 	}
 
+	@Override
 	public List<Org> getChildOrgs(String parentFullCode) {
 		return orgRepository.findByParentFullCode(parentFullCode);
 	}
 
+	@Override
 	public Org getOrgTree() {
 		List<Org> flatList = orgRepository.findAll();
 		List<Org> topLevelList = convertToTree(flatList);
@@ -74,6 +82,7 @@ public class OrgServiceImpl implements OrgService {
 		}
 	}
 
+	@Override
 	public void addOrg(Org org) throws BusinessException {
 		ReflectionUtil.fillCommonFields(org, ENTITY_SAVE_METHOD_ENUM.CREATE, "SYSTEM");
 		if (Strings.isNullOrEmpty(org.getParentFullCode())) {
@@ -89,6 +98,7 @@ public class OrgServiceImpl implements OrgService {
 		orgRepository.save(org);
 	}
 
+	@Override
 	public void editOrg(Org org) throws BusinessException {
 		Org orgFromDb = orgRepository.findByOrgFullCode(org.getOrgFullCode())
 				.orElseThrow(()->new BusinessException("ORG1002").setPlaceHolder(org.getOrgFullCode()));;
@@ -97,6 +107,7 @@ public class OrgServiceImpl implements OrgService {
 		orgRepository.save(orgFromDb);
 	}
 
+	@Override
 	public void deleteOrg(String orgFullCode) throws BusinessException {
 		int childOrgNum = orgRepository.countByParentFullCode(orgFullCode);
 		if (childOrgNum > 0) {
@@ -109,12 +120,14 @@ public class OrgServiceImpl implements OrgService {
 		}
 	}
 
+	@Override
 	public void bindUserOrg(String userCode, String orgCode) throws BusinessException {
 		User user = userService.getUnfilteredUser(userCode);
 		user.setOrgFullCode(orgCode);
 		userRepository.save(user);
 	}
 
+	@Override
 	public Org getUserOrg(String userCode) throws BusinessException {
 		User user = userService.getUnfilteredUser(userCode);
 		if (user == null || Strings.isNullOrEmpty(user.getOrgFullCode())) {

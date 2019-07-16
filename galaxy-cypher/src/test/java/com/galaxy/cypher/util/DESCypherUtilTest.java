@@ -40,25 +40,25 @@ public class DESCypherUtilTest {
 
 	@Test
 	public void encryptToBase64Text_shouldSucceed() throws BusinessException {
-		DESCypherUtil desCypherUtil = DESCypherUtil.getInstance("DES/CBC/PKCS5Padding", iv);
+		DesCypherUtil desCypherUtil = DesCypherUtil.getInstance("DES/CBC/PKCS5Padding", iv);
 		assertEquals(encryptedText, desCypherUtil.encryptToBase64Text(key, unEncryptedText));
 	}
 
 	@Test
 	public void encryptToBase64Text_charsetParam_shouldSucceed() throws BusinessException {
-		DESCypherUtil desCypherUtil = DESCypherUtil.getInstance("DES/CBC/PKCS5Padding", iv);
+		DesCypherUtil desCypherUtil = DesCypherUtil.getInstance("DES/CBC/PKCS5Padding", iv);
 		assertEquals(encryptedCharsetText, desCypherUtil.encryptToBase64Text(key, unEncryptedText, charset));
 	}
 
 	@Test
 	public void decryptToBase64Text_shouldSucceed() throws BusinessException {
-		DESCypherUtil desCypherUtil = DESCypherUtil.getInstance("DES/CBC/PKCS5Padding", iv);
+		DesCypherUtil desCypherUtil = DesCypherUtil.getInstance("DES/CBC/PKCS5Padding", iv);
 		assertEquals(unEncryptedText, desCypherUtil.decryptToBase64Text(key, encryptedText));
 	}
 
 	@Test
 	public void decryptToBase64Text_charsetParam_shouldSucceed() throws BusinessException {
-		DESCypherUtil desCypherUtil = DESCypherUtil.getInstance("DES/CBC/PKCS5Padding", iv);
+		DesCypherUtil desCypherUtil = DesCypherUtil.getInstance("DES/CBC/PKCS5Padding", iv);
 		assertEquals(unEncryptedText, desCypherUtil.decryptToBase64Text(key, encryptedCharsetText, charset));
 	}
 }

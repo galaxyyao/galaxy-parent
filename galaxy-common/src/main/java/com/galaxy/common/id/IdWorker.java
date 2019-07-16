@@ -57,11 +57,11 @@ public class IdWorker {
 		return getDefaultInstance().nextId();
 	}
 
-	public static String generateUUID() {
+	public static String generateUuid() {
 		return UUID.randomUUID().toString();
 	}
 
-	public static String generateUUIDWithoutDash() {
+	public static String generateUuidWithoutDash() {
 		return UUID.randomUUID().toString().replace("-", "");
 	}
 

@@ -18,7 +18,6 @@ import com.galaxy.common.constant.RequestConstant;
 import com.galaxy.authentication.config.AuthProperties;
 import com.galaxy.authentication.domain.custom.JwtAuthenticationRequest;
 import com.galaxy.authentication.domain.custom.JwtAuthenticationResponse;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +64,7 @@ public class AuthController {
 	private JwtTokenService jwtTokenService;
 
 	@Autowired
-	@Qualifier("jwtUserDetailsService")
+	@Qualifier("jwtUserDetailsServiceImpl")
 	private UserDetailsService userDetailsService;
 
 	private Cache<String, KeyPair> userKeyPair;

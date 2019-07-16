@@ -22,11 +22,13 @@ public class SysDictServiceImpl implements SysDictService {
 	private SysDictRepository sysDictRepository;
 
 	@Cacheable("sysDict")
+	@Override
 	public SysDict getSysDict(String sysDictFullCode) {
 		return sysDictRepository.findOneBySysDictFullCode(sysDictFullCode);
 	}
 
 	@Cacheable("sysDictName")
+	@Override
 	public String getSysDictName(String sysDictFullCode) {
 		SysDict sysDict = getSysDict(sysDictFullCode);
 		if (sysDict != null) {
@@ -36,11 +38,13 @@ public class SysDictServiceImpl implements SysDictService {
 	}
 
 	@Cacheable("childSysDicts")
+	@Override
 	public List<SysDict> getChildSysDicts(String parentFullCode) {
 		return sysDictRepository.findByParentFullCodeOrderBySortId(parentFullCode);
 	}
 
 	@Cacheable("bizDictCode")
+	@Override
 	public String getBizDictCode(String sysDictFullCode) {
 		SysDict sysDict = getSysDict(sysDictFullCode);
 		if (sysDict != null) {
@@ -50,6 +54,7 @@ public class SysDictServiceImpl implements SysDictService {
 	}
 
 	@Cacheable("sysDictFullCodeByBizDictCode")
+	@Override
 	public String getSysDictFullCodeByBizDictCode(String bizDictCode) {
 		SysDict sysDict = sysDictRepository.findOneByBizDictCode(bizDictCode);
 		if (sysDict != null) {
@@ -59,11 +64,13 @@ public class SysDictServiceImpl implements SysDictService {
 	}
 
 	@Cacheable("sysDictByParentFullCodeAndBizDictCode")
+	@Override
 	public SysDict getSysDictByParentFullCodeAndBizDictCode(String parentFullCode, String bizDictCode) {
 		return sysDictRepository.findOneByParentFullCodeAndBizDictCode(parentFullCode, bizDictCode);
 	}
 
 	@Cacheable("sysDictNameByParentFullCodeAndBizDictCode")
+	@Override
 	public String getSysDictNameByParentFullCodeAndBizDictCode(String parentFullCode, String bizDictCode) {
 		SysDict sysDict = getSysDictByParentFullCodeAndBizDictCode(parentFullCode, bizDictCode);
 		if (sysDict != null) {
@@ -72,6 +79,7 @@ public class SysDictServiceImpl implements SysDictService {
 		return "";
 	}
 
+	@Override
 	public SysDict getSysDictTree() {
 		List<SysDict> flatList = sysDictRepository.findAll();
 		List<SysDict> topLevelList = convertToTree(flatList);
@@ -114,6 +122,7 @@ public class SysDictServiceImpl implements SysDictService {
 	@CacheEvict(value = { "sysDict", "sysDictName", "childSysDicts", "bizDictCode",
 			"sysDictByParentFullCodeAndBizDictCode", "sysDictByParentFullCodeAndBizDictCode",
 			"sysDictNameByParentFullCodeAndBizDictCode" }, allEntries = true)
+	@Override
 	public void addSysDict(SysDict sysDict) throws BusinessException {
 		// 去除误输入的空格
 		sysDict.setSysDictCode(sysDict.getSysDictCode().trim());
@@ -135,6 +144,7 @@ public class SysDictServiceImpl implements SysDictService {
 	@CacheEvict(value = { "sysDict", "sysDictName", "childSysDicts", "bizDictCode",
 			"sysDictByParentFullCodeAndBizDictCode", "sysDictByParentFullCodeAndBizDictCode",
 			"sysDictNameByParentFullCodeAndBizDictCode" }, allEntries = true)
+	@Override
 	public void editSysDict(SysDict sysDict) throws BusinessException {
 		SysDict sysDictFromDb = sysDictRepository.findOneBySysDictFullCode(sysDict.getSysDictFullCode());
 		BeanUtils.copyProperties(sysDict, sysDictFromDb, ReflectionUtil.getCommonFields("sysDictId"));
@@ -145,6 +155,7 @@ public class SysDictServiceImpl implements SysDictService {
 	@CacheEvict(value = { "sysDict", "sysDictName", "childSysDicts", "bizDictCode",
 			"sysDictByParentFullCodeAndBizDictCode", "sysDictByParentFullCodeAndBizDictCode",
 			"sysDictNameByParentFullCodeAndBizDictCode" }, allEntries = true)
+	@Override
 	public void deleteSysDict(String sysDictFullCode) throws BusinessException {
 		int childSysDictNum = sysDictRepository.countByParentFullCode(sysDictFullCode);
 		if (childSysDictNum > 0) {

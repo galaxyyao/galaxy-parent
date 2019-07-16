@@ -16,8 +16,8 @@ import javax.crypto.*;
 import javax.crypto.spec.DESKeySpec;
 import javax.crypto.spec.IvParameterSpec;
 
-public class DESCypherUtil {
-	private static final Logger logger = LoggerFactory.getLogger(DESCypherUtil.class);
+public class DesCypherUtil {
+	private static final Logger logger = LoggerFactory.getLogger(DesCypherUtil.class);
 
 	/**
 	 * 算法名称/加密模式/填充方式
@@ -30,18 +30,18 @@ public class DESCypherUtil {
 	 */
 	private String iv;
 
-	private DESCypherUtil(String cypherAlgorithm, String iv) {
+	private DesCypherUtil(String cypherAlgorithm, String iv) {
 		this.cypherAlgorithm = cypherAlgorithm;
 		this.iv = iv;
 	}
 
-	private volatile static DESCypherUtil instance;
+	private volatile static DesCypherUtil instance;
 
-	public static DESCypherUtil getInstance(String cypherAlgorithm, String iv) {
+	public static DesCypherUtil getInstance(String cypherAlgorithm, String iv) {
 		if (instance == null) {
-			synchronized (DESCypherUtil.class) {
+			synchronized (DesCypherUtil.class) {
 				if (instance == null) {
-					instance = new DESCypherUtil(cypherAlgorithm, iv);
+					instance = new DesCypherUtil(cypherAlgorithm, iv);
 				}
 			}
 		}

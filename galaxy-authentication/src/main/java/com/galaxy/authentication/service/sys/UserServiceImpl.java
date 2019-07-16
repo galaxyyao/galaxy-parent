@@ -38,22 +38,26 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private JwtTokenService jwtTokenService;
 
+    @Override
     public User getCurrentUser() throws BusinessException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         return getValidUserByUserCode(currentPrincipalName);
     }
 
+    @Override
     public String getCurrentUserCode() throws BusinessException {
         return getCurrentUser().getUserCode();
     }
 
     @Cacheable("user")
+    @Override
     public User getUnfilteredUser(String userCode) throws BusinessException {
         User user = userRepository.findByUserCode(userCode).orElseThrow(() -> new BusinessException("ATH1001"));
         return user;
     }
 
+    @Override
     public User getValidUserByUserCode(String userCode) throws BusinessException {
         if (AuthConstant.TOKEN_MODE.equals(authProps.getMode())) {
             String authServerUrl = authProps.getToken().getAuthCenterUrl();
@@ -79,6 +83,7 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    @Override
     public User getValidUserByAuthToken(String authToken) throws BusinessException {
         if (authToken.startsWith(RequestConstant.AUTHORIZATION_TOKEN_PREFIX)) {
             authToken = authToken.substring(RequestConstant.AUTHORIZATION_TOKEN_PREFIX.length());

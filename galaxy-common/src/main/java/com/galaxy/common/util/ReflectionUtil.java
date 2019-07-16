@@ -8,11 +8,31 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author: 姚皓
+ * @date: 2019/7/16 11:38
+ * @description:
+ */
 public class ReflectionUtil {
 	private static final Logger logger = LoggerFactory.getLogger(ReflectionUtil.class);
 
+	/**
+	 * 保存方式枚举
+	 * CREATE（新建）/UPDATE（更新）/DELETE（删除）
+	 */
 	public enum ENTITY_SAVE_METHOD_ENUM {
-		CREATE, UPDATE, DELETE
+		/**
+		 * 新建
+		 */
+		CREATE,
+		/**
+		 * 更新
+		 */
+		UPDATE,
+		/**
+		 * 删除
+		 */
+		DELETE
 	}
 
 	public static void fillCommonFields(Object object, ENTITY_SAVE_METHOD_ENUM entitySaveMethod, String operatorUserCode) {

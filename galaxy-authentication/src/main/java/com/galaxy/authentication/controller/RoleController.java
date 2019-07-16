@@ -53,7 +53,7 @@ public class RoleController {
 
 	@RequestMapping(value = "/role", method = RequestMethod.PUT)
 	@PreAuthorize("hasAuthority('sys_role')")
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public JsonResult<Void> addRole(@RequestBody Role role) throws BusinessException {
 		ReflectionUtil.fillCommonFields(role, ENTITY_SAVE_METHOD_ENUM.CREATE, userService.getCurrentUserCode());
 		roleRepository.save(role);
@@ -67,7 +67,7 @@ public class RoleController {
 	}
 
 	@RequestMapping(value = "/user/bind", method = RequestMethod.POST)
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@PreAuthorize("hasAuthority('sys_role')")
 	@CacheEvict(value = {"userRole"}, key = "#bindUserRoleRequest.getUserCode()" )
 	public JsonResult<Void> bindUserRole(@RequestBody BindUserRoleRequest bindUserRoleRequest) throws BusinessException {
@@ -77,7 +77,7 @@ public class RoleController {
 
 	@RequestMapping(value = "/role", method = RequestMethod.POST)
 	@PreAuthorize("hasAuthority('sys_role')")
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public JsonResult<Void> editRole(@RequestBody Role role) throws BusinessException {
 		Role roleFromDb = roleRepository.findByRoleCode(role.getRoleCode())
 				.orElseThrow(()-> new BusinessException("ATH2008").setPlaceHolder(role.getRoleCode()));
@@ -89,7 +89,7 @@ public class RoleController {
 
 	@RequestMapping(value = "/role/{roleCode}", method = RequestMethod.DELETE)
 	@PreAuthorize("hasAuthority('sys_role')")
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public JsonResult<Void> deleteRole(@PathVariable String roleCode) throws BusinessException {
 		Role role = roleService.getRole(roleCode);
 		int userRoleBindNum = userRoleRelationRepository.countByRoleCode(roleCode);
