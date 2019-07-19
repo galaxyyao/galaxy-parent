@@ -1,3 +1,6 @@
+
+drop table if exists tuser;
+
 CREATE TABLE TUSER (
 	C_USERID VARCHAR(100),
 	C_USERNAME VARCHAR(100),

@@ -1,6 +1,9 @@
 spring:
   profiles:
     active: dev
+  datasource:
+    url: jdbc:h2:mem:corm
+    username: sa
 
 auth:
   jwt:
@@ -8,3 +11,4 @@ auth:
     login-path: "/login"
     refresh-path: "/refresh"
     sso-path: "/sso/**"
+
