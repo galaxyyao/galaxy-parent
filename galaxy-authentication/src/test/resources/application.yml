@@ -1,0 +1,21 @@
+info: true
+
+spring:
+  application:
+    name: galaxy-authentication
+  pidfile: ${spring.application.name}.pid
+
+node: 1
+
+server:
+  port: 20001
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always

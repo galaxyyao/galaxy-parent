@@ -1,0 +1,10 @@
+spring:
+  profiles:
+    active: dev
+
+auth:
+  jwt:
+    header: Authorization
+    login-path: "/login"
+    refresh-path: "/refresh"
+    sso-path: "/sso/**"

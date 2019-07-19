@@ -30,6 +30,7 @@ import com.google.common.base.Strings;
 @RestController
 @RequestMapping("/privilege")
 public class PrivilegeController {
+
     @Autowired
     private PrivilegeRepository privilegeRepository;
 
@@ -120,7 +121,7 @@ public class PrivilegeController {
         return new JsonResult<>(CommonConstant.JSON_RESULT_SUCCESS);
     }
 
-    @PostMapping(value = "/privilege")
+    @PutMapping(value = "/privilege")
     @PreAuthorize("hasAuthority('sys_privilege')")
     @Transactional(rollbackFor = Exception.class)
     public JsonResult<Void> editPrivilege(@RequestBody Privilege privilege) throws BusinessException {
