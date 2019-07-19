@@ -1,15 +1,10 @@
 package com.galaxy.authentication;
 
-import com.galaxy.authentication.domain.entity.User;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.ResourceUtils;
@@ -17,33 +12,28 @@ import org.springframework.util.ResourceUtils;
 import java.io.*;
 import java.net.URLDecoder;
 import java.sql.SQLException;
-import java.util.List;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @ActiveProfiles("test")
-public class H2DatabaseTest {
+public class BaseTest {
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    protected JdbcTemplate jdbcTemplate;
 
     @Before
-    public void startup() throws IOException, SQLException {
-        executeFromFile("tuser.sql");
+    public void startup() throws IOException {
+        executeFromFile();
     }
 
-    @Test
-    public void queryUser(){
-        RowMapper<User> rowMapper = new BeanPropertyRowMapper<>(User.class);
-        List<User> userList = jdbcTemplate.query("select * from tuser", rowMapper);
-        Assert.assertFalse(userList.isEmpty());
-    }
-
-    public void executeFromFile(String fileName) throws SQLException, IOException {
-        String sqlPath = ResourceUtils.getURL("classpath:").getPath() + "\\sql\\";
-        sqlPath = URLDecoder.decode(sqlPath, "utf-8") + fileName;
-        String sqlStr = readToString(sqlPath);
-        this.jdbcTemplate.execute(sqlStr);
+    public void executeFromFile() throws IOException {
+        String sqlPath = URLDecoder.decode(ResourceUtils.getURL("classpath:").getPath() + "\\sql\\", "utf-8");
+        File file = new File(sqlPath);
+        String[] files = file.list();
+        for (String fileName : files) {
+            String sqlStr = readToString(sqlPath + fileName);
+            this.jdbcTemplate.execute(sqlStr);
+        }
     }
 
     private String readToString(String fileName) {
@@ -68,5 +58,6 @@ public class H2DatabaseTest {
             return null;
         }
     }
+
 
 }
