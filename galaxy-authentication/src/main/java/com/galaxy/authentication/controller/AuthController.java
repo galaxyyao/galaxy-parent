@@ -31,13 +31,7 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.galaxy.authentication.constant.AuthConstant;
 import com.galaxy.authentication.exception.AuthenticationException;
@@ -74,7 +68,7 @@ public class AuthController {
 
 	private Cache<String, KeyPair> userKeyPair;
 
-	@RequestMapping(value = "${auth.jwt.login-path}", method = RequestMethod.POST)
+	@PostMapping(value = "${auth.jwt.login-path}")
 	public ResponseEntity<JsonResult> login(@RequestBody JwtAuthenticationRequest authenticationRequest)
 			throws BusinessException {
 		String userCode = authenticationRequest.getUsername().toLowerCase();
@@ -82,7 +76,7 @@ public class AuthController {
 		return generateJwtAuthenticationResponse(userCode);
 	}
 
-	@RequestMapping(value = "${auth.jwt.sso-path}", method = RequestMethod.POST)
+	@PostMapping(value = "${auth.jwt.sso-path}")
 	public ResponseEntity<JsonResult> sso(@RequestParam String userCode, @RequestParam String ssoToken) throws BusinessException {
 		userCode = userCode.toLowerCase();
 		ssoAuthenticate(userCode, ssoToken);
@@ -102,7 +96,7 @@ public class AuthController {
 				new JwtAuthenticationResponse(RequestConstant.AUTHORIZATION_TOKEN_PREFIX + token)));
 	}
 
-	@RequestMapping(value = "${auth.jwt.refresh-path}", method = RequestMethod.GET)
+	@GetMapping(value = "${auth.jwt.refresh-path}")
 	public ResponseEntity<JsonResult> refreshAndGetAuthenticationToken(HttpServletRequest request) {
 		String authToken = request.getHeader(authProps.getJwt().getHeader());
 		final String token = authToken.substring(7);
@@ -166,7 +160,7 @@ public class AuthController {
 		//TODO: authenticate SSO user token
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/security/encryptPassword")
+	@PostMapping(value = "/security/encryptPassword")
 	public JsonResult<String> encryptPassword(@RequestBody JwtAuthenticationRequest authenticationRequest)
 			throws BusinessException {
 		String userName = authenticationRequest.getUsername().toLowerCase();
@@ -186,7 +180,7 @@ public class AuthController {
 		}
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/security/publicKey/{userCode:.+}")
+	@GetMapping(value = "/security/publicKey/{userCode:.+}")
 	public JsonResult<String> getPublicKey(@PathVariable String userCode) throws BusinessException {
 		userCode = userCode.toLowerCase();
 		// generate public and private keys

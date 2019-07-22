@@ -1,8 +1,7 @@
 package com.galaxy.common;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
+import com.galaxy.common.profile.DefaultProfileUtil;
+import com.google.common.base.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -13,11 +12,10 @@ import org.springframework.boot.context.ApplicationPidFileWriter;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
-
-import com.galaxy.common.profile.DefaultProfileUtil;
-import com.google.common.base.Strings;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
-import org.springframework.scheduling.annotation.EnableScheduling;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /**
  * @author: 姚皓

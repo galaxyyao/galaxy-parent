@@ -1,13 +1,6 @@
 package com.galaxy.common.id;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.galaxy.common.exception.UnexpectedRuntimeException;
 
 /**
  * @author: 姚皓
@@ -15,6 +8,10 @@ import com.galaxy.common.exception.UnexpectedRuntimeException;
  * @description:
  */
 public class IdWorker {
+    private IdWorker() {
+
+    }
+
     public static String generateUuid() {
         return UUID.randomUUID().toString();
     }
